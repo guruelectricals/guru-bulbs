@@ -1,60 +1,58 @@
 import { NextResponse } from "next/server";
-import { saveFormSubmission } from "@/lib/form-submissions";
-import { Resend } from "resend";
-
-const resend = new Resend(process.env.RESEND_API_KEY);
-const toEmail = process.env.RESEND_TO_EMAIL || "hello@gurubulbs.com";
+import { sendContactEmails } from "@/lib/form-email";
+import {
+  isRateLimited,
+  validateContactSubmission,
+} from "@/lib/form-validation";
 
 export async function POST(request: Request) {
   try {
-    const body = await request.json();
-    const { name, email, subject, message } = body || {};
-
-    if (!name || !email || !subject || !message) {
+    if (isRateLimited(request)) {
       return NextResponse.json(
-        { success: false, message: "Please provide all required fields." },
-        { status: 400 },
+        {
+          success: false,
+          message: "Please wait a few minutes before submitting again.",
+        },
+        { status: 429 },
       );
     }
 
-    const record = await saveFormSubmission("contact", {
-      name,
-      email,
-      subject,
-      message,
-      submittedAt: new Date().toISOString(),
-    });
-
-    try {
-      await resend.emails.send({
-        from: "Guru Bulbs Contact <onboarding@resend.dev>",
-        to: toEmail,
-        subject: `New Contact Inquiry: ${subject}`,
-        html: `
-          <h2>New Contact Form Submission</h2>
-          <p><strong>Name:</strong> ${name}</p>
-          <p><strong>Email:</strong> ${email}</p>
-          <p><strong>Subject:</strong> ${subject}</p>
-          <p><strong>Message:</strong></p>
-          <p>${message.replace(/\n/g, '<br/>')}</p>
-        `,
+    const body = await request.json();
+    if (typeof body?.company === "string" && body.company.trim()) {
+      return NextResponse.json({
+        success: true,
+        message: "Contact form submitted successfully.",
       });
-    } catch (emailError) {
-      console.error("Failed to send email via Resend:", emailError);
     }
+
+    const submission = validateContactSubmission(body);
+    const id = `contact-${crypto.randomUUID()}`;
+
+    await sendContactEmails({ id, ...submission });
 
     return NextResponse.json({
       success: true,
       message: "Contact form submitted successfully.",
-      id: record.id,
+      id,
     });
   } catch (error: unknown) {
+    const message =
+      error instanceof Error ? error.message : "Failed to submit contact form.";
+    const isValidationError =
+      message.startsWith("Please provide") ||
+      message.startsWith("Please provide a valid") ||
+      message.endsWith("is too long.") ||
+      message === "Invalid form submission.";
+
+    console.error("Contact form submission failed:", error);
     return NextResponse.json(
       {
         success: false,
-        message: error instanceof Error ? error.message : "Failed to submit contact form.",
+        message: isValidationError
+          ? message
+          : "We could not send your message right now. Please try again shortly.",
       },
-      { status: 500 },
+      { status: isValidationError ? 400 : 503 },
     );
   }
 }
