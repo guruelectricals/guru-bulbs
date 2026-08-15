@@ -14,7 +14,7 @@ export async function generateMetadata(): Promise<Metadata> {
     description:
       settings?.footerDescription ||
       `Learn about ${companyName} — Nepal's premier LED lighting brand committed to precision thermal engineering, 85% energy savings, and certified safety standards.`,
-    canonical: "https://gurubulbs.com/about",
+    canonical: "https://guruelectricals.com.np/about",
   });
 }
 

@@ -9,6 +9,7 @@ import { Footer } from "@/components/layouts/footer";
 import { CookieBanner } from "@/components/cookie-banner";
 import { WhatsAppButton } from "@/components/whatsapp-button";
 import { getInitialSiteData } from "@/lib/site-data";
+import { constructMetadata, SITE_NAME, SITE_URL } from "@/lib/seo";
 
 const sansFont = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -31,11 +32,7 @@ const outfitFont = Outfit({
   weight: ["400", "500", "600", "700", "800", "900"],
 });
 
-export const metadata: Metadata = {
-  title: "Guru Bulbs - Premium Lighting Solutions",
-  description:
-    "Discover high-quality lighting solutions for your home and business",
-};
+export const metadata: Metadata = constructMetadata();
 
 export default async function RootLayout({
   children,
@@ -43,6 +40,22 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const { branding, categoryItems } = await getInitialSiteData();
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        name: branding?.companyName || SITE_NAME,
+        url: SITE_URL,
+      },
+      {
+        "@type": "WebSite",
+        name: branding?.companyName || SITE_NAME,
+        url: SITE_URL,
+        inLanguage: ["en", "ne"],
+      },
+    ],
+  };
 
   return (
     <html
@@ -51,6 +64,12 @@ export default async function RootLayout({
       suppressHydrationWarning
     >
       <body className="font-sans antialiased bg-background text-foreground">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(structuredData).replace(/</g, "\\u003c"),
+          }}
+        />
         <LanguageProvider>
           <SiteProvider branding={branding} categoryItems={categoryItems}>
             <ThemeProvider

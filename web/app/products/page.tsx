@@ -1,8 +1,12 @@
 import type { Metadata } from "next";
 import { sanityFetch } from "@/lib/fetch";
-import { getCategories, productsQuery, extractStartingPrice } from "@/lib/queries";
+import {
+  getCategories,
+  productsQuery,
+  extractStartingPrice,
+} from "@/lib/queries";
 import { urlFor } from "@/lib/image";
-import { constructMetadata } from "@/lib/seo";
+import { constructMetadata, SITE_URL } from "@/lib/seo";
 import { ProductsPageClient } from "@/components/pages/products-page";
 
 export const revalidate = 60;
@@ -10,7 +14,14 @@ export const revalidate = 60;
 export async function generateMetadata({
   searchParams,
 }: {
-  searchParams: Promise<{ type?: string }>;
+  searchParams: Promise<{
+    type?: string;
+    q?: string;
+    wattage?: string;
+    status?: string;
+    sort?: string;
+    stock?: string;
+  }>;
 }): Promise<Metadata> {
   const resolvedParams = await searchParams;
   const categorySlug =
@@ -28,6 +39,15 @@ export async function generateMetadata({
     }
   }
 
+  const isFiltered = Boolean(
+    resolvedParams.q ||
+    resolvedParams.wattage ||
+    resolvedParams.status ||
+    resolvedParams.sort ||
+    resolvedParams.stock ||
+    categorySlug,
+  );
+
   return constructMetadata({
     title: categoryTitle
       ? `${categoryTitle} Catalogue`
@@ -35,7 +55,8 @@ export async function generateMetadata({
     description:
       categoryDesc ||
       "Discover our complete range of high-efficiency, certified LED lighting solutions engineered for longevity and warmth.",
-    canonical: `https://gurubulbs.com/products${categorySlug ? `?type=${categorySlug}` : ""}`,
+    canonical: `${SITE_URL}/products`,
+    noIndex: isFiltered,
   });
 }
 

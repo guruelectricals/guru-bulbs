@@ -34,6 +34,7 @@ export const categoriesQuery = groq`
 
 const productCardFields = groq`
   _id,
+  _updatedAt,
   title,
   productCode,
   slug,
@@ -236,6 +237,7 @@ export const postsQuery = groq`
   *[_type == "post"]
   | order(publishedAt desc) {
     _id,
+    _updatedAt,
     title,
     slug,
     publishedAt,
@@ -258,6 +260,7 @@ export const postBySlugQuery = groq`
     slug.current == $slug
   ][0] {
     _id,
+    _updatedAt,
     title,
     slug,
     publishedAt,
@@ -405,16 +408,25 @@ export type SanityProduct = {
 // =====================================================
 
 export function extractStartingPrice(product: any): number | undefined {
-  if (typeof product?.startingPrice === "number" && !isNaN(product.startingPrice) && product.startingPrice > 0) {
+  if (
+    typeof product?.startingPrice === "number" &&
+    !isNaN(product.startingPrice) &&
+    product.startingPrice > 0
+  ) {
     return product.startingPrice;
   }
-  if (!product?.variants || !Array.isArray(product.variants) || product.variants.length === 0) {
+  if (
+    !product?.variants ||
+    !Array.isArray(product.variants) ||
+    product.variants.length === 0
+  ) {
     return undefined;
   }
   const prices = product.variants
     .flatMap((v: any) => [v?.k6500, v?.k4000, v?.k3000])
     .map((priceVal: any) => {
-      if (typeof priceVal === "number") return isNaN(priceVal) ? null : priceVal;
+      if (typeof priceVal === "number")
+        return isNaN(priceVal) ? null : priceVal;
       if (typeof priceVal === "string") {
         const cleaned = priceVal.replace(/[^0-9.]/g, "");
         const num = parseFloat(cleaned);

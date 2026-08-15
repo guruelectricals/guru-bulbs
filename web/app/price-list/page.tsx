@@ -12,7 +12,7 @@ export const metadata: Metadata = constructMetadata({
   title: "Official 2026 Wholesale & Dealer Rate Card",
   description:
     "Explore transparent retail, authorized dealer, and bulk volume rates for certified Guru Bulbs LED lighting products across Nepal.",
-  canonical: "https://gurubulbs.com/price-list",
+  canonical: "https://guruelectricals.com.np/price-list",
 });
 
 // Dedicated price-list query – fetches all variant columns from Sanity

@@ -6,7 +6,7 @@ export const metadata = constructMetadata({
   title: "Video Guides & Product Demos",
   description:
     "Watch Guru Bulbs video guides, installation tutorials, and LED technology product walkthroughs.",
-  canonical: "https://gurubulbs.com/videos",
+  canonical: "https://guruelectricals.com.np/videos",
 });
 
 export default async function VideosPage() {

@@ -84,19 +84,30 @@ export function ProductFilterBar({
 
   const rawCategoryTitle =
     currentCategory === "all"
-      ? (language === "ne" ? "सबै उत्पादनहरू" : "All Products")
-      : sanityCategories.find((c) => c.slug === currentCategory)?.title || "All Products";
+      ? language === "ne"
+        ? "सबै उत्पादनहरू"
+        : "All Products"
+      : sanityCategories.find((c) => c.slug === currentCategory)?.title ||
+        "All Products";
 
-  const currentCategoryTitle = t(rawCategoryTitle as TranslationKey) || rawCategoryTitle;
+  const currentCategoryTitle =
+    t(rawCategoryTitle as TranslationKey) || rawCategoryTitle;
 
   return (
     <div className="flex w-full flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
       {/* SEARCH INPUT */}
-      <form onSubmit={handleSearchSubmit} className="relative min-w-0 flex-1 sm:max-w-sm">
+      <form
+        onSubmit={handleSearchSubmit}
+        className="relative min-w-0 flex-1 sm:max-w-sm"
+      >
         <Search className="absolute left-3 top-1/2 size-3.5 -translate-y-1/2 text-neutral-400" />
         <Input
           type="text"
-          placeholder={language === "ne" ? "उत्पादनहरू खोज्नुहोस्..." : "Search products..."}
+          placeholder={
+            language === "ne"
+              ? "उत्पादनहरू खोज्नुहोस्..."
+              : "Search products..."
+          }
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           className="h-10 w-full rounded-full border-amber-500/20 bg-neutral-900/80 pl-8 pr-7 text-xs text-white placeholder:text-neutral-500 focus:border-amber-400 focus:ring-1 focus:ring-amber-400 backdrop-blur-xl"
@@ -136,13 +147,16 @@ export function ProductFilterBar({
           )}
         </PopoverTrigger>
         <PopoverContent
-          align="end"
-          sideOffset={8}
-          className="w-[calc(100vw-2rem)] max-w-80 rounded-3xl border-amber-500/30 bg-neutral-950/95 p-5 text-neutral-100 shadow-[0_10px_40px_rgba(0,0,0,0.8)] backdrop-blur-2xl space-y-4"
+          align="center"
+          side="bottom"
+          sideOffset={10}
+          className="max-h-[calc(100dvh-2rem)] w-[calc(100vw-2rem)] max-w-80 overflow-y-auto overscroll-contain rounded-3xl border-amber-500/30 bg-neutral-950/95 p-5 text-neutral-100 shadow-[0_10px_40px_rgba(0,0,0,0.8)] backdrop-blur-2xl space-y-4"
         >
           <PopoverHeader className="flex flex-row items-center justify-between pb-2 border-b border-amber-500/15">
             <PopoverTitle className="text-xs font-bold uppercase tracking-widest text-amber-400">
-              {language === "ne" ? "फिल्टर र क्रमबद्ध गर्नुहोस्" : "Filter & Sort Catalogue"}
+              {language === "ne"
+                ? "फिल्टर र क्रमबद्ध गर्नुहोस्"
+                : "Filter & Sort Catalogue"}
             </PopoverTitle>
             {activeFiltersCount > 0 && (
               <button
@@ -165,10 +179,16 @@ export function ProductFilterBar({
               onValueChange={(val) => updateParam("type", val)}
             >
               <SelectTrigger className="h-10 w-full rounded-xl border-amber-500/20 bg-neutral-900 text-xs font-semibold text-neutral-200">
-                <SelectValue placeholder={language === "ne" ? "सबै उत्पादनहरू" : "All Products"} />
+                <SelectValue
+                  placeholder={
+                    language === "ne" ? "सबै उत्पादनहरू" : "All Products"
+                  }
+                />
               </SelectTrigger>
               <SelectContent className="border-amber-500/20 bg-neutral-900 text-neutral-200">
-                <SelectItem value="all">{language === "ne" ? "सबै उत्पादनहरू" : "All Products"}</SelectItem>
+                <SelectItem value="all">
+                  {language === "ne" ? "सबै उत्पादनहरू" : "All Products"}
+                </SelectItem>
                 {sanityCategories.map((category) => (
                   <SelectItem key={category.slug} value={category.slug}>
                     {t(category.title as TranslationKey) || category.title}
@@ -188,13 +208,23 @@ export function ProductFilterBar({
               onValueChange={(val) => updateParam("wattage", val)}
             >
               <SelectTrigger className="h-10 w-full rounded-xl border-amber-500/20 bg-neutral-900 text-xs font-semibold text-neutral-200">
-                <SelectValue placeholder={language === "ne" ? "सबै वाटेज" : "All Wattages"} />
+                <SelectValue
+                  placeholder={language === "ne" ? "सबै वाटेज" : "All Wattages"}
+                />
               </SelectTrigger>
               <SelectContent className="border-amber-500/20 bg-neutral-900 text-neutral-200">
-                <SelectItem value="all">{language === "ne" ? "सबै वाटेज" : "All Wattages"}</SelectItem>
-                <SelectItem value="under-10w">{language === "ne" ? "१०W भन्दा कम (≤9W)" : "Under 10W (≤9W)"}</SelectItem>
+                <SelectItem value="all">
+                  {language === "ne" ? "सबै वाटेज" : "All Wattages"}
+                </SelectItem>
+                <SelectItem value="under-10w">
+                  {language === "ne" ? "१०W भन्दा कम (≤9W)" : "Under 10W (≤9W)"}
+                </SelectItem>
                 <SelectItem value="10w-20w">10W – 20W</SelectItem>
-                <SelectItem value="over-20w">{language === "ne" ? "२०W भन्दा बढी (≥50W)" : "Over 20W (≥50W)"}</SelectItem>
+                <SelectItem value="over-20w">
+                  {language === "ne"
+                    ? "२०W भन्दा बढी (≥50W)"
+                    : "Over 20W (≥50W)"}
+                </SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -209,10 +239,16 @@ export function ProductFilterBar({
               onValueChange={(val) => updateParam("status", val)}
             >
               <SelectTrigger className="h-10 w-full rounded-xl border-amber-500/20 bg-neutral-900 text-xs font-semibold text-neutral-200">
-                <SelectValue placeholder={language === "ne" ? "सबै ब्याजहरू" : "All Badges"} />
+                <SelectValue
+                  placeholder={
+                    language === "ne" ? "सबै ब्याजहरू" : "All Badges"
+                  }
+                />
               </SelectTrigger>
               <SelectContent className="border-amber-500/20 bg-neutral-900 text-neutral-200">
-                <SelectItem value="all">{language === "ne" ? "सबै ब्याजहरू" : "All Badges"}</SelectItem>
+                <SelectItem value="all">
+                  {language === "ne" ? "सबै ब्याजहरू" : "All Badges"}
+                </SelectItem>
                 <SelectItem value="bestSeller">{t("bestSeller")}</SelectItem>
                 <SelectItem value="new">{t("newArrival")}</SelectItem>
                 <SelectItem value="featured">{t("featured")}</SelectItem>
@@ -230,13 +266,29 @@ export function ProductFilterBar({
               onValueChange={(val) => updateParam("sort", val)}
             >
               <SelectTrigger className="h-10 w-full rounded-xl border-amber-500/20 bg-neutral-900 text-xs font-semibold text-neutral-200">
-                <SelectValue placeholder={language === "ne" ? "विशेष क्रम" : "Featured Sort"} />
+                <SelectValue
+                  placeholder={
+                    language === "ne" ? "विशेष क्रम" : "Featured Sort"
+                  }
+                />
               </SelectTrigger>
               <SelectContent className="border-amber-500/20 bg-neutral-900 text-neutral-200">
-                <SelectItem value="default">{language === "ne" ? "विशेष क्रम" : "Featured Sort"}</SelectItem>
-                <SelectItem value="price-asc">{language === "ne" ? "मूल्य: कम देखि बढी" : "Price: Low to High"}</SelectItem>
-                <SelectItem value="price-desc">{language === "ne" ? "मूल्य: बढी देखि कम" : "Price: High to Low"}</SelectItem>
-                <SelectItem value="rating">{language === "ne" ? "उच्च मूल्याङ्कन" : "Highest Rated"}</SelectItem>
+                <SelectItem value="default">
+                  {language === "ne" ? "विशेष क्रम" : "Featured Sort"}
+                </SelectItem>
+                <SelectItem value="price-asc">
+                  {language === "ne"
+                    ? "मूल्य: कम देखि बढी"
+                    : "Price: Low to High"}
+                </SelectItem>
+                <SelectItem value="price-desc">
+                  {language === "ne"
+                    ? "मूल्य: बढी देखि कम"
+                    : "Price: High to Low"}
+                </SelectItem>
+                <SelectItem value="rating">
+                  {language === "ne" ? "उच्च मूल्याङ्कन" : "Highest Rated"}
+                </SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -248,7 +300,9 @@ export function ProductFilterBar({
             </span>
             <button
               type="button"
-              onClick={() => updateParam("stock", currentStock ? "false" : "true")}
+              onClick={() =>
+                updateParam("stock", currentStock ? "false" : "true")
+              }
               className={cn(
                 "flex h-6 w-11 items-center rounded-full p-1 transition-colors duration-300",
                 currentStock ? "bg-amber-500" : "bg-neutral-800",
