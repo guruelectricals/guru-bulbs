@@ -1,89 +1,60 @@
 import { NextResponse } from "next/server";
-import { saveFormSubmission } from "@/lib/form-submissions";
-import { Resend } from "resend";
-
-const resend = new Resend(process.env.RESEND_API_KEY);
-const toEmail = process.env.RESEND_TO_EMAIL || "hello@gurubulbs.com";
+import { sendDealershipEmails } from "@/lib/form-email";
+import {
+  isRateLimited,
+  validateDealershipSubmission,
+} from "@/lib/form-validation";
 
 export async function POST(request: Request) {
   try {
-    const body = await request.json();
-    const {
-      businessName,
-      owner,
-      phone,
-      email,
-      address,
-      businessDuration,
-      currentProducts,
-      interests,
-      territory,
-      businessDescription,
-      pan,
-      website,
-    } = body || {};
-
-    if (!businessName || !owner || !phone || !email || !address || !businessDuration || !currentProducts) {
+    if (isRateLimited(request)) {
       return NextResponse.json(
-        { success: false, message: "Please provide all required fields." },
-        { status: 400 },
+        {
+          success: false,
+          message: "Please wait a few minutes before submitting again.",
+        },
+        { status: 429 },
       );
     }
 
-    const record = await saveFormSubmission("dealership", {
-      businessName,
-      owner,
-      phone,
-      email,
-      address,
-      pan,
-      website,
-      businessDuration,
-      currentProducts,
-      interests: Array.isArray(interests) ? interests : [],
-      territory,
-      businessDescription,
-      submittedAt: new Date().toISOString(),
-    });
-
-    try {
-      await resend.emails.send({
-        from: "Guru Bulbs Dealership <onboarding@resend.dev>",
-        to: toEmail,
-        subject: `New Dealership Application: ${businessName}`,
-        html: `
-          <h2>New Dealership Application</h2>
-          <p><strong>Business Name:</strong> ${businessName}</p>
-          <p><strong>Owner Name:</strong> ${owner}</p>
-          <p><strong>Phone:</strong> ${phone}</p>
-          <p><strong>Email:</strong> ${email}</p>
-          <p><strong>Address:</strong> ${address}</p>
-          <p><strong>PAN:</strong> ${pan || 'N/A'}</p>
-          <p><strong>Website/Social:</strong> ${website || 'N/A'}</p>
-          <p><strong>Business Duration:</strong> ${businessDuration}</p>
-          <p><strong>Current Products:</strong> ${currentProducts}</p>
-          <p><strong>Product Interests:</strong> ${Array.isArray(interests) ? interests.join(', ') : 'None'}</p>
-          <p><strong>Preferred Territory:</strong> ${territory || 'N/A'}</p>
-          <p><strong>Business Description:</strong></p>
-          <p>${businessDescription ? businessDescription.replace(/\n/g, '<br/>') : 'N/A'}</p>
-        `,
+    const body = await request.json();
+    if (typeof body?.confirmation === "string" && body.confirmation.trim()) {
+      return NextResponse.json({
+        success: true,
+        message: "Dealership application submitted successfully.",
       });
-    } catch (emailError) {
-      console.error("Failed to send email via Resend:", emailError);
     }
+
+    const submission = validateDealershipSubmission(body);
+    const id = `dealership-${crypto.randomUUID()}`;
+
+    await sendDealershipEmails({ id, ...submission });
 
     return NextResponse.json({
       success: true,
       message: "Dealership application submitted successfully.",
-      id: record.id,
+      id,
     });
   } catch (error: unknown) {
+    const message =
+      error instanceof Error
+        ? error.message
+        : "Failed to submit dealership application.";
+    const isValidationError =
+      message.startsWith("Please provide") ||
+      message.startsWith("Please provide a valid") ||
+      message.endsWith("is too long.") ||
+      message === "Invalid form submission.";
+
+    console.error("Dealership application submission failed:", error);
     return NextResponse.json(
       {
         success: false,
-        message: error instanceof Error ? error.message : "Failed to submit dealership application.",
+        message: isValidationError
+          ? message
+          : "We could not send your application right now. Please try again shortly.",
       },
-      { status: 500 },
+      { status: isValidationError ? 400 : 503 },
     );
   }
 }

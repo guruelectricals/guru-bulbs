@@ -12,6 +12,7 @@ const initialFormData = {
   email: "",
   subject: "",
   message: "",
+  company: "",
 };
 
 export function ContactForm() {
@@ -50,7 +51,9 @@ export function ContactForm() {
       setIsSubmitted(true);
     } catch (error: unknown) {
       setErrorMessage(
-        error instanceof Error ? error.message : "Something went wrong. Please try again.",
+        error instanceof Error
+          ? error.message
+          : "Something went wrong. Please try again.",
       );
     } finally {
       setIsSubmitting(false);
@@ -87,6 +90,21 @@ export function ContactForm() {
         </div>
       ) : (
         <form onSubmit={handleSubmit} className="mt-8 space-y-6">
+          <div
+            className="absolute -left-[10000px] top-auto size-px overflow-hidden"
+            aria-hidden="true"
+          >
+            <label htmlFor="contact-company">Company</label>
+            <input
+              id="contact-company"
+              name="company"
+              type="text"
+              value={formData.company}
+              onChange={handleChange}
+              tabIndex={-1}
+              autoComplete="off"
+            />
+          </div>
           <div className="grid gap-6 sm:grid-cols-2">
             <div>
               <label
@@ -140,7 +158,11 @@ export function ContactForm() {
               type="text"
               value={formData.subject}
               onChange={handleChange}
-              placeholder={language === "ne" ? "उत्पादन कोड, थोक अर्डर, वा डिलरशिप सोधपुछ" : "Product code, wholesale order, or dealership inquiry"}
+              placeholder={
+                language === "ne"
+                  ? "उत्पादन कोड, थोक अर्डर, वा डिलरशिप सोधपुछ"
+                  : "Product code, wholesale order, or dealership inquiry"
+              }
               className="h-12 rounded-xl border-amber-500/20 bg-neutral-950/80 px-4 text-sm text-white placeholder:text-neutral-500 focus:border-amber-500"
               required
             />
@@ -158,7 +180,11 @@ export function ContactForm() {
               name="message"
               value={formData.message}
               onChange={handleChange}
-              placeholder={language === "ne" ? "तपाईंको प्रश्न वा विवरण लेख्नुहोस्..." : "Detail your lighting specifications, order volume, or questions..."}
+              placeholder={
+                language === "ne"
+                  ? "तपाईंको प्रश्न वा विवरण लेख्नुहोस्..."
+                  : "Detail your lighting specifications, order volume, or questions..."
+              }
               rows={5}
               className="rounded-xl border-amber-500/20 bg-neutral-950/80 p-4 text-sm text-white placeholder:text-neutral-500 focus:border-amber-500"
               required

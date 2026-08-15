@@ -21,17 +21,50 @@ const initialFormData = {
   interests: [] as string[],
   territory: "",
   businessDescription: "",
+  confirmation: "",
 };
 
 const productInterests = [
-  { key: "LED Bulbs" as TranslationKey, labelEn: "LED Bulbs", labelNe: "एलईडी बल्बहरू" },
-  { key: "Surface Panel Lights" as TranslationKey, labelEn: "Panel Lights", labelNe: "प्यानल लाइटहरू" },
-  { key: "Flood Lights" as TranslationKey, labelEn: "Flood Lights", labelNe: "फ्लड लाइटहरू" },
-  { key: "Outdoor Lights" as TranslationKey, labelEn: "Outdoor Lights", labelNe: "आउटडोर लाइटहरू" },
-  { key: "Rechargeable LED Lights" as TranslationKey, labelEn: "Rechargeable", labelNe: "रिचार्जएबल लाइट" },
-  { key: "LED Tubelights" as TranslationKey, labelEn: "Tubelights", labelNe: "ट्युबलाइटहरू" },
-  { key: "Special Lights" as TranslationKey, labelEn: "Specialty Lighting", labelNe: "विशेष लाइटिङ" },
-  { key: "All Products" as TranslationKey, labelEn: "All Products", labelNe: "सबै उत्पादनहरू" },
+  {
+    key: "LED Bulbs" as TranslationKey,
+    labelEn: "LED Bulbs",
+    labelNe: "एलईडी बल्बहरू",
+  },
+  {
+    key: "Surface Panel Lights" as TranslationKey,
+    labelEn: "Panel Lights",
+    labelNe: "प्यानल लाइटहरू",
+  },
+  {
+    key: "Flood Lights" as TranslationKey,
+    labelEn: "Flood Lights",
+    labelNe: "फ्लड लाइटहरू",
+  },
+  {
+    key: "Outdoor Lights" as TranslationKey,
+    labelEn: "Outdoor Lights",
+    labelNe: "आउटडोर लाइटहरू",
+  },
+  {
+    key: "Rechargeable LED Lights" as TranslationKey,
+    labelEn: "Rechargeable",
+    labelNe: "रिचार्जएबल लाइट",
+  },
+  {
+    key: "LED Tubelights" as TranslationKey,
+    labelEn: "Tubelights",
+    labelNe: "ट्युबलाइटहरू",
+  },
+  {
+    key: "Special Lights" as TranslationKey,
+    labelEn: "Specialty Lighting",
+    labelNe: "विशेष लाइटिङ",
+  },
+  {
+    key: "All Products" as TranslationKey,
+    labelEn: "All Products",
+    labelNe: "सबै उत्पादनहरू",
+  },
 ];
 
 const fieldClassName =
@@ -59,21 +92,29 @@ export function DealershipApplicationForm() {
       const result = await response.json();
 
       if (!response.ok || !result?.success) {
-        throw new Error(result?.message || "Failed to submit the dealership application.");
+        throw new Error(
+          result?.message || "Failed to submit the dealership application.",
+        );
       }
 
       setFormData(initialFormData);
       setSubmitted(true);
     } catch (error: unknown) {
       setErrorMessage(
-        error instanceof Error ? error.message : "Something went wrong. Please try again.",
+        error instanceof Error
+          ? error.message
+          : "Something went wrong. Please try again.",
       );
     } finally {
       setIsSubmitting(false);
     }
   }
 
-  function handleChange(event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) {
+  function handleChange(
+    event: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
+  ) {
     const { name, value } = event.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   }
@@ -108,12 +149,27 @@ export function DealershipApplicationForm() {
           <h3 className="mt-4 text-xl font-bold text-white">
             {t("appReceived")}
           </h3>
-          <p className="mt-2 text-sm text-neutral-300">
-            {t("appThankYou")}
-          </p>
+          <p className="mt-2 text-sm text-neutral-300">{t("appThankYou")}</p>
         </div>
       ) : (
         <form onSubmit={handleSubmit} className="mt-8 space-y-8">
+          <div
+            className="absolute -left-[10000px] top-auto size-px overflow-hidden"
+            aria-hidden="true"
+          >
+            <label htmlFor="dealership-confirmation">
+              Leave this field blank
+            </label>
+            <input
+              id="dealership-confirmation"
+              name="confirmation"
+              type="text"
+              value={formData.confirmation}
+              onChange={handleChange}
+              tabIndex={-1}
+              autoComplete="off"
+            />
+          </div>
           <fieldset>
             <legend className="text-sm font-bold text-white">
               {t("step1BizInfo")}
@@ -124,7 +180,11 @@ export function DealershipApplicationForm() {
                   name="businessName"
                   value={formData.businessName}
                   onChange={handleChange}
-                  placeholder={language === "ne" ? "तपाईंको व्यवसाय / पसलको नाम" : "Your business / shop name"}
+                  placeholder={
+                    language === "ne"
+                      ? "तपाईंको व्यवसाय / पसलको नाम"
+                      : "Your business / shop name"
+                  }
                   className={fieldClassName}
                   required
                 />
@@ -134,7 +194,11 @@ export function DealershipApplicationForm() {
                   name="owner"
                   value={formData.owner}
                   onChange={handleChange}
-                  placeholder={language === "ne" ? "सञ्चालकको पुरा नाम" : "Full name of the owner"}
+                  placeholder={
+                    language === "ne"
+                      ? "सञ्चालकको पुरा नाम"
+                      : "Full name of the owner"
+                  }
                   className={fieldClassName}
                   required
                 />
@@ -150,7 +214,10 @@ export function DealershipApplicationForm() {
                   required
                 />
               </Field>
-              <Field label={language === "ne" ? "इमेल ठेगाना" : "Email Address"} required>
+              <Field
+                label={language === "ne" ? "इमेल ठेगाना" : "Email Address"}
+                required
+              >
                 <Input
                   name="email"
                   value={formData.email}
@@ -161,12 +228,20 @@ export function DealershipApplicationForm() {
                   required
                 />
               </Field>
-              <Field label={t("companyAddress")} required className="sm:col-span-2">
+              <Field
+                label={t("companyAddress")}
+                required
+                className="sm:col-span-2"
+              >
                 <Input
                   name="address"
                   value={formData.address}
                   onChange={handleChange}
-                  placeholder={language === "ne" ? "शहर, जिल्ला, प्रदेश" : "City, District, Province"}
+                  placeholder={
+                    language === "ne"
+                      ? "शहर, जिल्ला, प्रदेश"
+                      : "City, District, Province"
+                  }
                   className={fieldClassName}
                   required
                 />
@@ -185,7 +260,11 @@ export function DealershipApplicationForm() {
                   name="website"
                   value={formData.website}
                   onChange={handleChange}
-                  placeholder={language === "ne" ? "फेसबुक पेज, वेबसाइट, इत्यादि (वैकल्पिक)" : "Facebook page, website, etc. (optional)"}
+                  placeholder={
+                    language === "ne"
+                      ? "फेसबुक पेज, वेबसाइट, इत्यादि (वैकल्पिक)"
+                      : "Facebook page, website, etc. (optional)"
+                  }
                   className={fieldClassName}
                 />
               </Field>
@@ -206,12 +285,24 @@ export function DealershipApplicationForm() {
                   required
                 >
                   <option value="" disabled>
-                    {language === "ne" ? "अवधि छनौट गर्नुहोस्" : "Select duration"}
+                    {language === "ne"
+                      ? "अवधि छनौट गर्नुहोस्"
+                      : "Select duration"}
                   </option>
-                  <option>{language === "ne" ? "१ वर्षभन्दा कम" : "Less than 1 year"}</option>
-                  <option>{language === "ne" ? "१–३ वर्ष" : "1–3 years"}</option>
-                  <option>{language === "ne" ? "३–५ वर्ष" : "3–5 years"}</option>
-                  <option>{language === "ne" ? "५ वर्षभन्दा बढी" : "More than 5 years"}</option>
+                  <option>
+                    {language === "ne" ? "१ वर्षभन्दा कम" : "Less than 1 year"}
+                  </option>
+                  <option>
+                    {language === "ne" ? "१–३ वर्ष" : "1–3 years"}
+                  </option>
+                  <option>
+                    {language === "ne" ? "३–५ वर्ष" : "3–5 years"}
+                  </option>
+                  <option>
+                    {language === "ne"
+                      ? "५ वर्षभन्दा बढी"
+                      : "More than 5 years"}
+                  </option>
                 </select>
               </Field>
               <Field label={t("productsCurrentLabel")} required>
@@ -219,7 +310,11 @@ export function DealershipApplicationForm() {
                   name="currentProducts"
                   value={formData.currentProducts}
                   onChange={handleChange}
-                  placeholder={language === "ne" ? "उदाहरण: एलईडी बल्ब, विद्युतीय सामान, घरायसी उपकरण..." : "e.g. LED bulbs, electrical items, home appliances..."}
+                  placeholder={
+                    language === "ne"
+                      ? "उदाहरण: एलईडी बल्ब, विद्युतीय सामान, घरायसी उपकरण..."
+                      : "e.g. LED bulbs, electrical items, home appliances..."
+                  }
                   className="min-h-24 rounded-xl border-amber-500/20 bg-neutral-950/80 p-4 text-sm text-white placeholder:text-neutral-500 focus:border-amber-500"
                   required
                 />
@@ -252,7 +347,11 @@ export function DealershipApplicationForm() {
                   name="territory"
                   value={formData.territory}
                   onChange={handleChange}
-                  placeholder={language === "ne" ? "उदाहरण: काठमाडौँ उपत्यका, पोखरा, चितवन..." : "e.g. Kathmandu Valley, Pokhara, Chitwan..."}
+                  placeholder={
+                    language === "ne"
+                      ? "उदाहरण: काठमाडौँ उपत्यका, पोखरा, चितवन..."
+                      : "e.g. Kathmandu Valley, Pokhara, Chitwan..."
+                  }
                   className={fieldClassName}
                 />
               </Field>
@@ -269,7 +368,11 @@ export function DealershipApplicationForm() {
                   name="businessDescription"
                   value={formData.businessDescription}
                   onChange={handleChange}
-                  placeholder={language === "ne" ? "तपाईंको व्यवसायको छोटो विवरण, आउटलेटहरूको संख्या, मासिक बिक्री परिमाण, आदि।" : "Brief description of your business, number of outlets, monthly sales volume, etc."}
+                  placeholder={
+                    language === "ne"
+                      ? "तपाईंको व्यवसायको छोटो विवरण, आउटलेटहरूको संख्या, मासिक बिक्री परिमाण, आदि।"
+                      : "Brief description of your business, number of outlets, monthly sales volume, etc."
+                  }
                   className="min-h-32 rounded-xl border-amber-500/20 bg-neutral-950/80 p-4 text-sm text-white placeholder:text-neutral-500 focus:border-amber-500"
                 />
               </Field>
@@ -288,7 +391,8 @@ export function DealershipApplicationForm() {
               disabled={isSubmitting}
               className="h-11 rounded-full bg-amber-500 px-6 text-xs font-extrabold uppercase tracking-wider text-neutral-950 hover:bg-amber-400 shadow-lg shadow-amber-500/25 disabled:cursor-not-allowed disabled:opacity-70"
             >
-              {isSubmitting ? "Submitting..." : t("submit")} <Send className="ml-2 size-4" />
+              {isSubmitting ? "Submitting..." : t("submit")}{" "}
+              <Send className="ml-2 size-4" />
             </Button>
           </div>
         </form>

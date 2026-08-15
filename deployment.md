@@ -7,6 +7,7 @@ This guide explains how to deploy both the Next.js frontend (`web`) and the stan
 ## Prerequisites
 
 Before starting, ensure you have:
+
 1. A **Vercel Account** connected to your Git provider (GitHub, GitLab, or Bitbucket).
 2. The code pushed to a Git repository.
 3. The Sanity Project ID (`vdlf8k9d`) and Dataset (`production`).
@@ -21,12 +22,20 @@ Before starting, ensure you have:
 2. **Configure Project Settings**:
    - **Project Name**: `guru-bulbs-web` (or your preferred name)
    - **Framework Preset**: `Next.js`
-   - **Root Directory**: Click *Edit* and select the `web` folder.
+   - **Root Directory**: Click _Edit_ and select the `web` folder.
 3. **Set Environment Variables**:
    Add the following environment variables under the **Environment Variables** section:
    - `NEXT_PUBLIC_SANITY_PROJECT_ID` = `vdlf8k9d`
    - `NEXT_PUBLIC_SANITY_DATASET` = `production`
-   - *(Optional)* `SANITY_API_READ_TOKEN` = `<your_read_token>` (only needed if fetching drafts or using preview mode)
+   - _(Optional)_ `SANITY_API_READ_TOKEN` = `<your_read_token>` (only needed if fetching drafts or using preview mode)
+   - `RESEND_API_KEY` = `<your_resend_api_key>`
+   - `RESEND_FROM_EMAIL` = `Guru Bulbs <hello@gurubulbs.com>`
+   - `RESEND_REPLY_TO_EMAIL` = `hello@gurubulbs.com`
+   - `RESEND_CONTACT_TO_EMAIL` = `hello@gurubulbs.com`
+   - `RESEND_DEALERSHIP_TO_EMAIL` = `dealers@gurubulbs.com` _(optional; otherwise general contact inbox is used)_
+
+   Before deploying, add and verify `gurubulbs.com` in Resend. The sender address must use that verified domain; Resend's onboarding sender is intended only for testing. The contact and dealership forms send an internal notification (with Reply-to set to the submitter) plus a separate automatic confirmation to the customer.
+
 4. **Deploy**:
    - Click **Deploy**. Vercel will compile the Next.js application and generate a public URL (e.g., `https://guru-bulbs-web.vercel.app`).
 
@@ -37,25 +46,25 @@ Before starting, ensure you have:
 Sanity Studio is a Single Page Application (SPA). To prevent Vercel from returning `404 Not Found` errors when navigating to deep Studio links directly (e.g., `/structure`), we route all traffic to `index.html`.
 
 ### Step 2.1: Add `vercel.json` to the Studio folder
+
 Create a `vercel.json` file inside the `studio/` folder with the following configuration:
 
 ```json
 {
   "cleanUrls": true,
-  "rewrites": [
-    { "source": "/(.*)", "destination": "/" }
-  ]
+  "rewrites": [{ "source": "/(.*)", "destination": "/" }]
 }
 ```
 
 ### Step 2.2: Configure Vercel Project
+
 1. **Import the Project in Vercel**:
    - Go to your Vercel Dashboard, click **Add New > Project**.
    - Select the same Git repository again.
 2. **Configure Project Settings**:
    - **Project Name**: `guru-bulbs-studio` (or your preferred name)
    - **Framework Preset**: `Other` (or `Vite` if auto-detected)
-   - **Root Directory**: Click *Edit* and select the `studio` folder.
+   - **Root Directory**: Click _Edit_ and select the `studio` folder.
    - **Build & Development Settings**:
      - Build Command: `npm run build` or `npx sanity build`
      - Output Directory: `dist`
