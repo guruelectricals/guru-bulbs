@@ -3,8 +3,9 @@ import { ServiceDesignPage } from "@/components/pages/service-design-page";
 
 export const metadata = constructMetadata({
   title: "Electrical Design",
-  description: "Explore our electrical design services for reliable and efficient lighting solutions.",
-  canonical: "https://gurubulbs.com/electrical-design",
+  description:
+    "Explore our electrical design services for reliable and efficient lighting solutions.",
+  canonical: "https://guruelectricals.com.np/electrical-design",
 });
 
 export default function ElectricalDesignPage() {

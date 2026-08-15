@@ -15,7 +15,7 @@ import {
 import { sanityFetch } from "@/lib/fetch";
 import { postBySlugQuery, postsQuery } from "@/lib/queries";
 import { urlFor } from "@/lib/image";
-import { constructMetadata } from "@/lib/seo";
+import { constructMetadata, SITE_URL } from "@/lib/seo";
 import { PortableText } from "@portabletext/react";
 import { ShareButtons } from "@/components/share-buttons";
 
@@ -45,7 +45,7 @@ export async function generateMetadata({
       post.excerpt ||
       `Read ${post.title} on Guru Bulbs lighting insights blog.`,
     image: imageUrl,
-    canonical: `https://gurubulbs.com/blog/${slug}`,
+    canonical: `${SITE_URL}/blog/${slug}`,
     type: "article",
     publishedAt: post.publishedAt,
     authors: post.author?.name ? [post.author.name] : undefined,
@@ -84,9 +84,35 @@ export default async function BlogDetailPage({
         year: "numeric",
       })
     : "Jan 2026";
+  const postUrl = `${SITE_URL}/blog/${slug}`;
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: post.title,
+    description: post.excerpt,
+    mainEntityOfPage: postUrl,
+    ...(coverImageUrl ? { image: [coverImageUrl] } : {}),
+    ...(post.publishedAt ? { datePublished: post.publishedAt } : {}),
+    ...(post._updatedAt ? { dateModified: post._updatedAt } : {}),
+    author: {
+      "@type": "Person",
+      name: post.author?.name || "Guru Bulbs Editorial Team",
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "Guru Bulbs",
+      url: SITE_URL,
+    },
+  };
 
   return (
     <article className="relative min-h-screen bg-neutral-950 text-neutral-100 pt-28 pb-16 sm:pt-32 px-4 sm:px-6 lg:px-6 xl:px-10 overflow-hidden">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(structuredData).replace(/</g, "\\u003c"),
+        }}
+      />
       {/* GLOWING AMBER BACKGROUND AURA */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 size-[650px] rounded-full bg-amber-500/10 blur-[150px] pointer-events-none" />
 

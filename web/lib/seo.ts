@@ -11,7 +11,8 @@ export type ConstructMetadataParams = {
   authors?: string[];
 };
 
-const SITE_NAME = "Guru Bulbs";
+export const SITE_NAME = "Guru Bulbs";
+export const SITE_URL = "https://guruelectricals.com.np";
 const DEFAULT_TITLE = "Guru Bulbs | Premium LED Lighting Solutions";
 const DEFAULT_DESCRIPTION =
   "Nepal's trusted source for certified, high-efficiency LED bulbs, surface panels, conceal lights, tubelights, and emergency lighting.";
@@ -30,7 +31,7 @@ export function constructMetadata({
   const metaDescription = description || DEFAULT_DESCRIPTION;
 
   return {
-    metadataBase: new URL("https://gurubulbs.com"),
+    metadataBase: new URL(SITE_URL),
     title: metaTitle,
     description: metaDescription,
     keywords: [
@@ -43,15 +44,21 @@ export function constructMetadata({
       "Energy Efficient Lighting",
       "Kathmandu Lighting Supplier",
     ],
-    authors: authors ? authors.map((name) => ({ name })) : [{ name: SITE_NAME }],
+    authors: authors
+      ? authors.map((name) => ({ name }))
+      : [{ name: SITE_NAME }],
     creator: SITE_NAME,
     publisher: SITE_NAME,
     robots: {
       index: !noIndex,
       follow: !noIndex,
+      nocache: false,
       googleBot: {
         index: !noIndex,
         follow: !noIndex,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+        "max-video-preview": -1,
       },
     },
     openGraph: {

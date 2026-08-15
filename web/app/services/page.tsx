@@ -4,9 +4,17 @@ import {
   CircuitBoard,
   Lightbulb,
   Sparkles,
-  ArrowRight
+  ArrowRight,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import { constructMetadata, SITE_URL } from "@/lib/seo";
+
+export const metadata = constructMetadata({
+  title: "Lighting, Electrical & 3D Design Services",
+  description:
+    "Explore Guru Bulbs lighting design, electrical design, and 3D visualisation services for residential and commercial projects in Nepal.",
+  canonical: `${SITE_URL}/services`,
+});
 
 const services: {
   title: string;
@@ -70,11 +78,11 @@ export default function ServicesPage() {
                 <div className="inline-flex items-center justify-center size-14 rounded-full border border-amber-500/30 bg-amber-500/10 text-amber-400 group-hover:scale-110 group-hover:bg-amber-500/20 transition-all">
                   <Icon className="size-6" />
                 </div>
-                
+
                 <h2 className="text-3xl font-extrabold tracking-tight text-white group-hover:text-amber-400 transition-colors">
                   {service.title}
                 </h2>
-                
+
                 <p className="flex-grow text-base leading-relaxed text-neutral-300">
                   {service.description}
                 </p>

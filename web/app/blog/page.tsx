@@ -12,7 +12,7 @@ export const metadata: Metadata = constructMetadata({
   title: "Lighting Insights & LED Technical Guides",
   description:
     "Explore expert articles, energy efficiency calculators, smart bulb automation guides, and architectural lighting trends by Guru Bulbs engineers.",
-  canonical: "https://gurubulbs.com/blog",
+  canonical: "https://guruelectricals.com.np/blog",
 });
 
 export default async function BlogPage() {
