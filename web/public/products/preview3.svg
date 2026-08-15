@@ -1,0 +1,15 @@
+<svg width="960" height="800" viewBox="0 0 960 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="960" height="800" rx="48" fill="url(#bg)"/>
+  <circle cx="179" cy="136" r="184" fill="#FED7AA" fill-opacity=".65"/>
+  <circle cx="788" cy="652" r="174" fill="#FDE68A" fill-opacity=".43"/>
+  <ellipse cx="480" cy="689" rx="170" ry="31" fill="#7C2D12" fill-opacity=".12"/>
+  <path d="M480 119C344 119 258 220 286 345C300 407 340 454 391 486V553H569V486C620 454 660 407 674 345C702 220 616 119 480 119Z" fill="url(#glass)" stroke="#FFF7ED" stroke-width="14"/>
+  <path d="M391 553H569V618C569 645 547 667 520 667H440C413 667 391 645 391 618V553Z" fill="#A8A29E"/>
+  <path d="M411 582H549M411 617H549" stroke="#78716C" stroke-width="14" stroke-linecap="round"/>
+  <path d="M429 455C429 387 448 339 480 292C512 339 531 387 531 455" stroke="#C2410C" stroke-width="12" stroke-linecap="round"/>
+  <path d="M429 455H531M449 420H511M461 385H499M469 350H491" stroke="#EA580C" stroke-width="10" stroke-linecap="round"/>
+  <defs>
+    <linearGradient id="bg" x1="72" y1="50" x2="886" y2="761" gradientUnits="userSpaceOnUse"><stop stop-color="#FFF7ED"/><stop offset=".5" stop-color="#FFFBEB"/><stop offset="1" stop-color="#FAE8FF"/></linearGradient>
+    <linearGradient id="glass" x1="349" y1="142" x2="612" y2="537" gradientUnits="userSpaceOnUse"><stop stop-color="#FED7AA"/><stop offset=".55" stop-color="#FEF3C7"/><stop offset="1" stop-color="#FDBA74"/></linearGradient>
+  </defs>
+</svg>
