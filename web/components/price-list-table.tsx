@@ -199,13 +199,12 @@ export function PriceListTable({ products }: { products: PriceListProduct[] }) {
               : "No products match your filters"}
           </p>
           <Button
-            variant="outline"
-            size="sm"
+            variant="brandOutline"
+            size="cta-sm"
             onClick={() => {
               setSearchQuery("");
               setSelectedCategory("all");
             }}
-            className="rounded-full border-amber-500/30 text-xs font-bold text-amber-400"
           >
             {language === "ne" ? "फिल्टर हटाउनुहोस्" : "Clear Filters"}
           </Button>

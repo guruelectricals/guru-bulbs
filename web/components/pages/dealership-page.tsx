@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import {
   ArrowRight,
   MapPin,
@@ -111,22 +111,17 @@ export function DealershipPageClient() {
             {t("dealerHeroDesc")}
           </p>
           <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link href="#dealership-application">
-              <Button
-                size="lg"
-                className="h-13 bg-amber-500 px-8 text-xs sm:text-sm font-bold tracking-wider uppercase text-neutral-950 rounded-full shadow-lg shadow-amber-500/25 transition-all duration-300 hover:bg-amber-400 hover:shadow-amber-500/40 hover:scale-[1.03]"
-              >
-                {t("dealershipEnquiry")} <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
+            <Link
+              href="#dealership-application"
+              className={buttonVariants({ variant: "brand", size: "cta-lg" })}
+            >
+              {t("dealershipEnquiry")} <ArrowRight className="size-4" />
             </Link>
-            <Link href={getLocalizedHref("/price-list")}>
-              <Button
-                size="lg"
-                variant="outline"
-                className="h-13 border-amber-500/30 bg-neutral-900/60 px-8 text-xs sm:text-sm font-bold tracking-wider uppercase text-neutral-200 rounded-full backdrop-blur-md hover:border-amber-500/60 hover:text-amber-400"
-              >
-                {t("viewWholesaleCat")}
-              </Button>
+            <Link
+              href={getLocalizedHref("/price-list")}
+              className={buttonVariants({ variant: "brandOutline", size: "cta-lg" })}
+            >
+              {t("viewWholesaleCat")}
             </Link>
           </div>
         </div>
@@ -278,13 +273,11 @@ export function DealershipPageClient() {
           </div>
 
           <div className="mt-10">
-            <Link href="#dealership-application">
-              <Button
-                size="lg"
-                className="h-13 bg-amber-500 px-8 text-xs font-bold tracking-wider uppercase text-neutral-950 rounded-full shadow-lg shadow-amber-500/25 transition-all duration-300 hover:bg-amber-400 hover:shadow-amber-500/40 hover:scale-[1.03]"
-              >
-                {t("startApplication")} <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
+            <Link
+              href="#dealership-application"
+              className={buttonVariants({ variant: "brand", size: "cta-lg" })}
+            >
+              {t("startApplication")} <ArrowRight className="size-4" />
             </Link>
           </div>
         </div>

@@ -19,7 +19,7 @@ import {
 import type { LucideIcon } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { PriceTag } from "@/components/price-tag";
 import { urlFor } from "@/lib/image";
@@ -32,8 +32,8 @@ import {
   SERVICE_PROMISES,
 } from "@/lib/constants";
 import type { TranslationKey } from "@/lib/i18n";
+import { HomeHeroCarousel, type HeroSlide } from "@/components/home-hero-carousel";
 
-const HOME_IMAGE = "/images/hero-house.png";
 const PRODUCTS_IMAGE = "/images/hero-products-ring-cutout.png";
 
 const ICON_MAP: Record<string, LucideIcon> = {
@@ -86,6 +86,29 @@ export function HomePage({
       .url()
     : "/images/bulb.png";
 
+  const heroDescriptionText = (
+    heroDescription || t("heroDescription" as TranslationKey)
+  ).replace(/([.,])([^\s])/g, "$1 $2");
+
+  const heroSlides: HeroSlide[] = featuredProducts
+    .filter((product) => product.mainImage?.image)
+    .map((product) => ({
+      key: product._id,
+      imageUrl: urlFor(product.mainImage.image).width(1400).url(),
+      imageAlt: product.mainImage.alt || product.title,
+    }));
+
+  if (heroSlides.length === 0) {
+    heroSlides.push({
+      key: "fallback",
+      imageUrl: PRODUCTS_IMAGE,
+      imageAlt:
+        language === "ne"
+          ? "गुरु एलईडी बल्ब र लाइटिङ उत्पादनहरूको संग्रह"
+          : "Guru LED bulbs, panel lights and floodlight product lineup",
+    });
+  }
+
   const displayReviews =
     testimonials && testimonials.length > 0
       ? testimonials.map((tItem) => ({
@@ -117,110 +140,40 @@ export function HomePage({
 
   return (
     <div className="min-h-screen bg-neutral-950 text-neutral-100">
-      {/* ─── HERO + PROMISES BAR ─── fills the full viewport on desktop ───── */}
-      <div className="flex flex-col lg:h-svh lg:overflow-hidden">
+      {/* ─── HERO + PROMISES BAR ─── share the first screen from tablet up ── */}
+      <div className="flex flex-col md:min-h-svh">
 
-        {/* HERO SECTION */}
-        <section className="relative flex flex-1 items-center overflow-hidden border-b border-amber-500/15 bg-neutral-950 px-4 pt-24 pb-8 sm:px-8 sm:pt-28 sm:pb-12 lg:px-6 xl:px-10">
-          <div className="pointer-events-none absolute inset-0 z-0 bg-[#070705]">
-            <Image
-              src={HOME_IMAGE}
-              alt={
-                language === "ne"
-                  ? "गुरु एलईडी बल्ब र लाइटिङ उत्पादनहरूको संग्रह"
-                  : "Guru bulbs home and lighting hero background"
-              }
-              fill
-              priority
-              quality={100}
-              sizes="100vw"
-              className="object-cover object-center"
-            />
-            {/* Warm ambient glow */}
-            <div className="absolute inset-0 bg-amber-500/10 mix-blend-color z-10" />
-            <div className="absolute inset-0 bg-gradient-to-tr from-amber-600/10 via-transparent to-amber-400/5 mix-blend-overlay z-10" />
-            {/* Floor blend */}
-            <div className="absolute inset-x-0 bottom-0 h-2/3 bg-gradient-to-t from-[#070705] via-[#070705]/60 to-transparent z-10" />
-          </div>
-
-          <div className="relative z-20 mx-auto grid w-full max-w-[1440px] items-center gap-6 md:grid-cols-2 md:gap-8 lg:gap-10">
-            {/* Copy */}
-            <div className="relative z-10 max-w-2xl">
-              <div className="mb-5 inline-flex items-center gap-2.5 rounded-full border border-amber-500/70 bg-black/40 px-4 py-1.5 text-[10px] sm:text-[11px] font-bold tracking-[0.2em] text-amber-400 uppercase backdrop-blur-sm">
-                <span className="size-1.5 rounded-full bg-amber-400" />
-                {heroBadge || t("heroBadge" as TranslationKey)}
-              </div>
-
-              <h1 className="max-w-2xl text-balance text-4xl leading-[1.05] font-bold tracking-tight text-[#f8f8f8] sm:text-5xl lg:text-[4.5rem]">
-                {heroTitlePrefix || t("heroTitlePrefix" as TranslationKey)}{" "}
-                <span className="gold-gradient-text font-serif italic font-medium tracking-normal">
-                  {heroTitleSuffix || t("heroTitleSuffix" as TranslationKey)}
-                </span>
-              </h1>
-
-              <p className="mt-5 max-w-xl text-sm leading-relaxed font-normal tracking-wide text-[#d4d4d4] sm:text-base sm:leading-[1.8] lg:text-lg">
-                {(heroDescription || t("heroDescription" as TranslationKey)).replace(/([.,])([^\s])/g, "$1 $2")}
-              </p>
-
-              <div className="mt-8 flex flex-wrap items-center gap-4">
-                <Link href={language === "ne" ? "/ne/products" : "/products"}>
-                  <Button
-                    size="lg"
-                    className="h-12 sm:h-14 bg-amber-500 px-6 sm:px-8 text-xs sm:text-[13px] font-bold tracking-widest uppercase text-black hover:bg-amber-400 transition-all rounded-md"
-                  >
-                    {t("exploreCollection" as TranslationKey)}
-                    <ArrowRight className="ml-2 size-4" />
-                  </Button>
-                </Link>
-                <Link href={language === "ne" ? "/ne/contact" : "/contact"}>
-                  <Button
-                    size="lg"
-                    variant="outline"
-                    className="h-12 sm:h-14 border-amber-500/80 bg-transparent px-6 sm:px-8 text-xs sm:text-[13px] font-bold tracking-widest uppercase text-[#f8f8f8] hover:bg-amber-500/10 hover:border-amber-400 transition-all rounded-md"
-                  >
-                    {t("contactUs" as TranslationKey)}
-                  </Button>
-                </Link>
-              </div>
-            </div>
-
-            {/* Bulbs product lineup — single responsive container */}
-            <div className="relative mx-auto aspect-square w-full max-w-[320px] sm:max-w-[420px] md:max-w-[480px] lg:max-w-[600px] mt-4 md:mt-0">
-              <div className="absolute bottom-[6%] left-1/2 h-8 w-[70%] -translate-x-1/2 rounded-[100%] bg-black/90 blur-xl z-0" />
-              <div className="absolute bottom-[10%] left-1/2 h-4 w-[50%] -translate-x-1/2 rounded-[100%] bg-black blur-md z-0" />
-              <Image
-                src={PRODUCTS_IMAGE}
-                alt={
-                  language === "ne"
-                    ? "गुरु एलईडी बल्ब र लाइटिङ उत्पादनहरूको संग्रह"
-                    : "Guru LED bulbs, panel lights and floodlight product lineup"
-                }
-                fill
-                priority
-                quality={100}
-                sizes="(min-width: 1024px) 600px, (min-width: 768px) 480px, 100vw"
-                className="relative z-10 object-contain object-bottom drop-shadow-[0_20px_40px_rgba(0,0,0,0.8)] scale-105 origin-bottom"
-              />
-            </div>
-          </div>
-        </section>
+        {/* HERO — landing copy over a carousel of featured product images */}
+        <HomeHeroCarousel
+          slides={heroSlides}
+          badge={heroBadge || t("heroBadge" as TranslationKey)}
+          titlePrefix={heroTitlePrefix || t("heroTitlePrefix" as TranslationKey)}
+          titleSuffix={heroTitleSuffix || t("heroTitleSuffix" as TranslationKey)}
+          description={heroDescriptionText}
+          primaryLabel={t("exploreCollection" as TranslationKey)}
+          primaryHref={language === "ne" ? "/ne/products" : "/products"}
+          secondaryLabel={t("contactUs" as TranslationKey)}
+          secondaryHref={language === "ne" ? "/ne/contact" : "/contact"}
+        />
 
         {/* PROMISES BAR */}
-        <section className="shrink-0 border-b border-amber-500/30 bg-amber-500 px-4 py-5 text-neutral-950 shadow-lg shadow-amber-500/10 sm:px-8 lg:px-6 xl:px-10">
-          <div className="mx-auto grid max-w-[1440px] grid-cols-2 gap-y-4 sm:grid-cols-3 lg:grid-cols-5 lg:gap-0">
+        <section className="shrink-0 border-y border-amber-500/15 bg-neutral-900/40 px-4 py-5 sm:px-8 lg:px-6 xl:px-10">
+          <div className="mx-auto grid max-w-[1440px] grid-cols-2 gap-x-2 gap-y-4 sm:grid-cols-3 lg:grid-cols-5 lg:gap-0 [&>*:last-child]:col-span-2 sm:[&>*:last-child]:col-span-1">
             {PRODUCT_PROMISES.map((promise, index) => {
               const Icon = ICON_MAP[promise.iconName] || Zap;
               return (
                 <div
                   key={index}
-                  className={`flex items-center gap-3 px-3 lg:px-5 ${index > 0 ? "lg:border-l lg:border-neutral-950/20" : ""}`}
+                  className={`flex items-center gap-3 px-1 sm:px-3 lg:px-5 ${index > 0 ? "lg:border-l lg:border-amber-500/15" : ""}`}
                 >
-                  <Icon className="size-7 shrink-0 text-neutral-950" strokeWidth={2.2} />
+                  <span className="flex size-9 shrink-0 items-center justify-center rounded-xl border border-amber-500/20 bg-amber-500/10 text-amber-400 sm:size-10">
+                    <Icon className="size-5" strokeWidth={2} />
+                  </span>
                   <div>
-                    <p className="text-xs font-extrabold tracking-wider uppercase">
+                    <p className="text-xs font-extrabold tracking-wider text-white uppercase">
                       {t(promise.titleKey)}
                     </p>
-                    <p className="mt-0.5 text-[11px] font-medium text-neutral-900/80">
+                    <p className="mt-0.5 text-[11px] font-medium text-neutral-400">
                       {t(promise.descKey)}
                     </p>
                   </div>
@@ -607,15 +560,10 @@ export function HomePage({
 
             <Link
               href={language === "ne" ? "/ne/dealership" : "/dealership"}
-              className="shrink-0"
+              className={buttonVariants({ variant: "brand", size: "cta-lg", className: "shrink-0" })}
             >
-              <Button
-                size="lg"
-                className="h-14 bg-amber-500 px-8 text-xs sm:text-sm font-bold tracking-wider uppercase text-neutral-950 shadow-xl shadow-amber-500/25 transition-all duration-300 hover:bg-amber-400 hover:shadow-amber-500/40 hover:scale-[1.03]"
-              >
-                {language === "ne" ? "डिलरसीप सोधपुछ" : "Dealership Enquiry"}{" "}
-                <ArrowRight className="ml-2 size-4" />
-              </Button>
+              {language === "ne" ? "डिलरसीप सोधपुछ" : "Dealership Enquiry"}{" "}
+              <ArrowRight className="size-4" />
             </Link>
           </div>
         </div>

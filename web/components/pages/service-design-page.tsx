@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowRight, Sparkles } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 
 type ServiceDesignPageProps = {
   title: string;
@@ -29,10 +29,11 @@ export function ServiceDesignPage({ title, description }: ServiceDesignPageProps
           This page is part of the new Services section in the navigation and is ready for your content and design details.
         </div>
 
-        <Link href="/contact">
-          <Button className="rounded-full bg-amber-500 font-bold text-neutral-950 hover:bg-amber-400">
-            Contact us <ArrowRight className="ml-2 size-4" />
-          </Button>
+        <Link
+          href="/contact"
+          className={buttonVariants({ variant: "brand", size: "cta" })}
+        >
+          Contact us <ArrowRight className="size-4" />
         </Link>
       </div>
     </main>
