@@ -33,6 +33,7 @@ export interface Settings {
   heroImage?: SanityImage;
   heroProductImage?: SanityImage;
   footerDescription?: string;
+  footerDescriptionNe?: string;
   aboutDescription?: string;
   copyright?: string;
   cookieConsentTitle?: string;

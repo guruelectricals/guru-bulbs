@@ -21,6 +21,7 @@ export function toSettingsDTO(settings: Settings): SettingsDTO {
     tiktok: settings.tiktok,
     secondaryPhone: settings.secondaryPhone,
     footerDescription: settings.footerDescription,
+    footerDescriptionNe: settings.footerDescriptionNe,
     copyright: settings.copyright,
     cookieConsentTitle: settings.cookieConsentTitle,
     cookieConsentDescription: settings.cookieConsentDescription,

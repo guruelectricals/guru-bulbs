@@ -16,6 +16,7 @@ export interface SettingsDTO {
   tiktok?: string;
   secondaryPhone?: string;
   footerDescription?: string;
+  footerDescriptionNe?: string;
   copyright?: string;
   cookieConsentTitle?: string;
   cookieConsentDescription?: string;
