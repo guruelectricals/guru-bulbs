@@ -11,6 +11,7 @@ export type SiteBranding = {
   whatsapp?: string;
   copyright?: string;
   footerDescription?: string;
+  footerDescriptionNe?: string;
   cookieConsentTitle?: string;
   cookieConsentDescription?: string;
   essentialCookiesLabel?: string;

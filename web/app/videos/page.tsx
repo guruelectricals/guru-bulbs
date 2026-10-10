@@ -2,6 +2,8 @@ import { constructMetadata } from "@/lib/seo";
 import { VideosPageClient } from "@/components/pages/videos-page";
 import { getVideos } from "@/services/video.service";
 
+export const revalidate = 60;
+
 export const metadata = constructMetadata({
   title: "Video Guides & Product Demos",
   description:

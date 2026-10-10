@@ -50,6 +50,7 @@ export async function getInitialSiteData(): Promise<InitialSiteData> {
         whatsapp: settings?.whatsapp,
         copyright: settings?.copyright,
         footerDescription: settings?.footerDescription,
+        footerDescriptionNe: settings?.footerDescriptionNe,
         cookieConsentTitle: settings?.cookieConsentTitle,
         cookieConsentDescription: settings?.cookieConsentDescription,
         essentialCookiesLabel: settings?.essentialCookiesLabel,

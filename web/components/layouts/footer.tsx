@@ -31,7 +31,7 @@ export function Footer({ branding }: { branding?: SiteBranding } = {}) {
 
   const description =
     language === "ne"
-      ? ((activeBranding as any).footerDescriptionNe || t("heroDescription"))
+      ? (activeBranding.footerDescriptionNe || t("heroDescription"))
       : (activeBranding.footerDescription || t("heroDescription"));
 
   const currentYear = new Date().getFullYear();

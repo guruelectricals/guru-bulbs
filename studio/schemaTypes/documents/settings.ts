@@ -342,6 +342,14 @@ export const settingsType = defineType({
     }),
 
     defineField({
+      name: "footerDescriptionNe",
+      title: "Footer Description (Nepali)",
+      type: "text",
+      rows: 3,
+      group: "footer",
+    }),
+
+    defineField({
       name: "aboutDescription",
       title: "About Us Description",
       type: "array",
