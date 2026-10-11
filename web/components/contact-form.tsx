@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Send, Sparkles } from "lucide-react";
+import { Send } from "lucide-react";
 import { useState } from "react";
 import { useLanguage } from "@/providers/language-provider";
 
@@ -62,7 +62,7 @@ export function ContactForm() {
 
   return (
     <div className="rounded-3xl border border-amber-500/30 bg-neutral-900/70 p-8 sm:p-10 backdrop-blur-2xl shadow-[0_0_50px_-10px_rgba(240,188,25,0.15)]">
-      <div className="flex items-center justify-between border-b border-amber-500/15 pb-6">
+      <div className="border-b border-amber-500/15 pb-6">
         <div>
           <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
             {t("sendMessageTitle")}
@@ -73,7 +73,6 @@ export function ContactForm() {
               : "Fill out the form below and our lighting team will respond promptly."}
           </p>
         </div>
-        <Sparkles className="size-6 text-amber-400" />
       </div>
 
       {isSubmitted ? (
