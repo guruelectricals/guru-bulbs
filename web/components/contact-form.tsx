@@ -200,10 +200,12 @@ export function ContactForm() {
           <Button
             type="submit"
             disabled={isSubmitting}
-            className="h-13 w-full bg-amber-500 font-extrabold uppercase tracking-wider text-neutral-950 hover:bg-amber-400 text-xs sm:text-sm rounded-full shadow-lg shadow-amber-500/25 transition-all duration-300 hover:shadow-amber-500/40 hover:scale-[1.01] disabled:cursor-not-allowed disabled:opacity-70"
+            variant="brand"
+            size="cta-lg"
+            className="w-full disabled:cursor-not-allowed disabled:opacity-70"
           >
             {isSubmitting ? "Submitting..." : `${t("submit")} `}
-            <Send className="ml-2 size-4" />
+            <Send className="size-4" />
           </Button>
         </form>
       )}

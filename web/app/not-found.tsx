@@ -39,7 +39,8 @@ export default function NotFound() {
             <Button
               nativeButton={false}
               render={<Link href="/" />}
-              className="bg-amber-500 text-black hover:bg-amber-600"
+              variant="brand"
+              size="cta"
             >
               <ArrowLeft className="size-4" />
               Back to Home
@@ -47,7 +48,8 @@ export default function NotFound() {
             <Button
               nativeButton={false}
               render={<Link href="/products" />}
-              variant="outline"
+              variant="brandOutline"
+              size="cta"
             >
               <Search className="size-4" />
               Browse Products

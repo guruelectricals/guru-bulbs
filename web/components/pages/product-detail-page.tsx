@@ -11,7 +11,7 @@ import {
   Zap,
 } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { useLanguage } from "@/providers/language-provider";
 import {
   toDevanagariNumerals,
@@ -140,8 +140,8 @@ export function ProductDetailPageClient({
         )}
 
         {/* Theme-aware gradient overlays for crisp readability */}
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-background/95 via-background/85 to-background/30 dark:from-black/90 dark:via-black/65 dark:to-black/30" />
-        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/90 via-transparent to-background/20 dark:from-black/80 dark:via-transparent dark:to-black/30" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-r from-background/55 via-background/15 to-transparent dark:from-black/75 dark:via-black/35 dark:to-transparent" />
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-background/45 via-transparent to-transparent dark:from-black/60 dark:via-transparent dark:to-transparent" />
 
         {/* Amber accent glow at base */}
         <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-amber-500/50 to-transparent" />
@@ -187,7 +187,7 @@ export function ProductDetailPageClient({
           </div>
 
           {/* Title */}
-          <h1 className="max-w-3xl text-4xl font-extrabold leading-tight tracking-tight text-foreground dark:text-white dark:drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)] sm:text-5xl lg:text-6xl">
+          <h1 className="max-w-3xl text-4xl font-extrabold leading-tight tracking-tight text-foreground drop-shadow-[0_1px_8px_rgba(255,253,248,0.9)] dark:text-white dark:drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)] sm:text-5xl lg:text-6xl">
             {translateContent(targetProduct.title, language)}
           </h1>
 
@@ -319,20 +319,19 @@ export function ProductDetailPageClient({
 
             {/* CTA Buttons */}
             <div className="flex flex-col gap-3 sm:flex-row">
-              <Link href={getLocalizedHref("/contact")} className="flex-1">
-                <Button className="w-full bg-amber-400 font-bold text-black hover:brightness-110">
-                  <ShoppingCart className="mr-2 size-4" />
-                  Enquire
-                </Button>
+              <Link
+                href={getLocalizedHref("/contact")}
+                className={buttonVariants({ variant: "brand", size: "cta", className: "w-full sm:flex-1" })}
+              >
+                <ShoppingCart className="size-4" />
+                Enquire
               </Link>
-              <Link href={getLocalizedHref("/products")} className="flex-1">
-                <Button
-                  variant="outline"
-                  className="w-full border-border text-foreground hover:bg-muted"
-                >
-                  <ArrowLeft className="mr-2 size-4" />
-                  Back to Products
-                </Button>
+              <Link
+                href={getLocalizedHref("/products")}
+                className={buttonVariants({ variant: "brandOutline", size: "cta", className: "w-full sm:flex-1" })}
+              >
+                <ArrowLeft className="size-4" />
+                Back to Products
               </Link>
             </div>
           </div>
@@ -639,11 +638,12 @@ export function ProductDetailPageClient({
               wholesale pricing.
             </p>
           </div>
-          <Link href={getLocalizedHref("/contact")}>
-            <Button className="bg-amber-400 font-bold text-black hover:bg-amber-300">
-              Contact Us
-              <ArrowRight className="ml-2 size-4" />
-            </Button>
+          <Link
+            href={getLocalizedHref("/contact")}
+            className={buttonVariants({ variant: "brand", size: "cta" })}
+          >
+            Contact Us
+            <ArrowRight className="size-4" />
           </Link>
         </div>
       </section>

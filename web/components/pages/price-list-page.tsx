@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { ArrowRight, Tag, Info, FileText, CheckCircle2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
   PriceListTable,
@@ -91,14 +91,12 @@ export function PriceListPageClient({ products }: { products: PriceListProduct[]
               : "Transparent retail pricing, verified authorized dealer margins, and bulk volume contract rates for certified Guru Bulbs LED products."}
           </p>
           <div className="pt-2 flex flex-wrap justify-center gap-3">
-            <Link href={getLocalizedHref("/contact")}>
-              <Button
-                size="lg"
-                className="rounded-full bg-amber-500 font-extrabold text-neutral-950 hover:bg-amber-400 shadow-lg shadow-amber-500/25 px-6 text-xs"
-              >
-                <FileText className="size-4 mr-1.5" />
-                {language === "ne" ? "आधिकारिक PDF दर पत्र अनुरोध गर्नुहोस्" : "Request Official PDF Quotation"}
-              </Button>
+            <Link
+              href={getLocalizedHref("/contact")}
+              className={buttonVariants({ variant: "brand", size: "cta-lg" })}
+            >
+              <FileText className="size-4" />
+              {language === "ne" ? "आधिकारिक PDF दर पत्र अनुरोध गर्नुहोस्" : "Request Official PDF Quotation"}
             </Link>
           </div>
         </div>
@@ -157,22 +155,17 @@ export function PriceListPageClient({ products }: { products: PriceListProduct[]
             {t("customQuoteDesc")}
           </p>
           <div className="flex flex-wrap justify-center gap-4 pt-2">
-            <Link href={getLocalizedHref("/contact")}>
-              <Button
-                size="lg"
-                className="rounded-full bg-amber-500 font-extrabold text-neutral-950 hover:bg-amber-400 px-8 text-xs shadow-lg shadow-amber-500/25"
-              >
-                {t("contactSalesTeam")} <ArrowRight className="size-4 ml-1" />
-              </Button>
+            <Link
+              href={getLocalizedHref("/contact")}
+              className={buttonVariants({ variant: "brand", size: "cta-lg" })}
+            >
+              {t("contactSalesTeam")} <ArrowRight className="size-4" />
             </Link>
-            <Link href={getLocalizedHref("/dealership")}>
-              <Button
-                size="lg"
-                variant="outline"
-                className="rounded-full border-amber-500/40 text-amber-400 hover:bg-amber-500/10 px-8 text-xs"
-              >
-                {t("registerAsDealer")}
-              </Button>
+            <Link
+              href={getLocalizedHref("/dealership")}
+              className={buttonVariants({ variant: "brandOutline", size: "cta-lg" })}
+            >
+              {t("registerAsDealer")}
             </Link>
           </div>
         </div>

@@ -3,7 +3,7 @@ import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from '@/lib/utils'
 
-const buttonVariants = cva(
+const buttonVariantsBase = cva(
   "group/button inline-flex shrink-0 items-center justify-center rounded-md border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   {
     variants: {
@@ -18,6 +18,10 @@ const buttonVariants = cva(
         destructive:
           "bg-destructive/10 text-destructive hover:bg-destructive/20 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30 dark:focus-visible:ring-destructive/40",
         link: "text-primary underline-offset-4 hover:underline",
+        brand:
+          "rounded-full bg-amber-500 font-bold tracking-wider text-neutral-950 uppercase shadow-lg shadow-amber-500/25 hover:bg-amber-400 hover:shadow-amber-500/40",
+        brandOutline:
+          "rounded-full border-amber-500/40 bg-transparent font-bold tracking-wider text-neutral-200 uppercase hover:border-amber-400 hover:bg-amber-500/10 hover:text-amber-400",
       },
       size: {
         default:
@@ -31,6 +35,9 @@ const buttonVariants = cva(
         "icon-sm":
           "size-8 rounded-[min(var(--radius-md),10px)] in-data-[slot=button-group]:rounded-md",
         "icon-lg": "size-10",
+        "cta-sm": "h-9 gap-1.5 px-4 text-[11px]",
+        cta: "h-11 gap-2 px-6 text-xs",
+        "cta-lg": "h-12 gap-2 px-7 text-xs sm:h-13 sm:px-8 sm:text-[13px]",
       },
     },
     defaultVariants: {
@@ -40,12 +47,18 @@ const buttonVariants = cva(
   }
 )
 
+// Merged with tailwind-merge so variant/size classes (e.g. rounded-full) override
+// the base classes when applied directly to links: <Link className={buttonVariants(...)} />
+function buttonVariants(...args: Parameters<typeof buttonVariantsBase>) {
+  return cn(buttonVariantsBase(...args))
+}
+
 function Button({
   className,
   variant = "default",
   size = "default",
   ...props
-}: ButtonPrimitive.Props & VariantProps<typeof buttonVariants>) {
+}: ButtonPrimitive.Props & VariantProps<typeof buttonVariantsBase>) {
   return (
     <ButtonPrimitive
       data-slot="button"

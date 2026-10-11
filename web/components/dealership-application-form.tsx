@@ -389,10 +389,12 @@ export function DealershipApplicationForm() {
             <Button
               type="submit"
               disabled={isSubmitting}
-              className="h-11 rounded-full bg-amber-500 px-6 text-xs font-extrabold uppercase tracking-wider text-neutral-950 hover:bg-amber-400 shadow-lg shadow-amber-500/25 disabled:cursor-not-allowed disabled:opacity-70"
+              variant="brand"
+              size="cta"
+              className="disabled:cursor-not-allowed disabled:opacity-70"
             >
               {isSubmitting ? "Submitting..." : t("submit")}{" "}
-              <Send className="ml-2 size-4" />
+              <Send className="size-4" />
             </Button>
           </div>
         </form>

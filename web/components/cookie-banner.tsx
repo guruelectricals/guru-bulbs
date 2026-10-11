@@ -184,22 +184,21 @@ export function CookieBanner({
           <div className="grid grid-cols-2 gap-2">
             <Button
               type="button"
-              variant="outline"
-              size="sm"
+              variant="brandOutline"
+              size="cta-sm"
               onClick={() => saveConsent("essential")}
-              className="h-10 rounded-2xl border-amber-500/30 bg-neutral-900/80 text-xs font-bold text-neutral-200 hover:border-amber-400 hover:text-white"
             >
               {activeEssentialLabel}
             </Button>
             <Button
               type="button"
-              size="sm"
+              variant="brand"
+              size="cta-sm"
               onClick={() =>
                 saveConsent(analyticsConsent ? "all" : "essential")
               }
-              className="h-10 rounded-2xl bg-amber-500 text-xs font-extrabold text-neutral-950 hover:bg-amber-400 shadow-lg shadow-amber-500/25"
             >
-              <Check className="size-3.5 mr-1" />
+              <Check className="size-3.5" />
               {activeAcceptAllLabel}
             </Button>
           </div>

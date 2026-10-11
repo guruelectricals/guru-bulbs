@@ -325,6 +325,56 @@
   box-shadow: 0 1rem 2.5rem rgb(60 48 18 / 0.12);
 }
 
+/* Bright amber (#f0bc19) reads well on dark surfaces but washes out on cream.
+   In the light theme, render amber text, icons and borders in a deeper gold. */
+.light :is(
+    [class~="text-amber-300"],
+    [class~="text-amber-400"],
+    [class~="text-amber-500"],
+    [class~="text-amber-400/90"],
+    [class~="text-amber-400/80"]
+  ) {
+  color: var(--amber-700);
+}
+
+.light :is(
+    [class~="hover:text-amber-300"],
+    [class~="hover:text-amber-400"],
+    [class~="hover:text-amber-500"]
+  ):hover,
+.light .group:hover [class~="group-hover:text-amber-400"],
+.light .group\/item:hover [class~="group-hover/item:text-amber-400"] {
+  color: var(--amber-800);
+}
+
+.light [class~="border-amber-500/10"] {
+  border-color: rgb(174 118 5 / 0.18);
+}
+
+.light [class~="border-amber-500/15"] {
+  border-color: rgb(174 118 5 / 0.22);
+}
+
+.light [class~="border-amber-500/20"] {
+  border-color: rgb(174 118 5 / 0.28);
+}
+
+.light [class~="border-amber-500/25"] {
+  border-color: rgb(174 118 5 / 0.32);
+}
+
+.light [class~="border-amber-500/30"] {
+  border-color: rgb(174 118 5 / 0.38);
+}
+
+.light [class~="border-amber-500/40"] {
+  border-color: rgb(174 118 5 / 0.45);
+}
+
+.light :is([class~="bg-amber-500/10"], [class~="hover:bg-amber-500/10"]:hover) {
+  background-color: rgb(211 158 13 / 0.14);
+}
+
 /* The site was initially built with dark neutral utility classes. Keep those
    existing classes theme-aware so pages and shared components switch together. */
 .light :is([class~="bg-neutral-950"], [class~="bg-gray-50"]) {
@@ -553,101 +603,8 @@
       transparent 32%);
 }
 
-/* Home hero: the supplied house image stays full-bleed while the copy keeps
-   the same readable, warm treatment in both site themes. */
-.home-hero-surface {
-  background: #070705;
-}
-
-.home-hero-house {
-  filter: brightness(1.2) contrast(1.04) saturate(1.14);
-}
-
-.home-hero-warm-glow {
-  background: radial-gradient(
-    circle at 66% 43%,
-    rgb(255 205 89 / 0.42),
-    transparent 42%
-  );
-}
-
-.home-hero-scrim {
-  background: linear-gradient(
-    90deg,
-    rgb(0 0 0 / 0.7) 0%,
-    rgb(0 0 0 / 0.28) 40%,
-    rgb(0 0 0 / 0.01) 76%,
-    rgb(0 0 0 / 0.06) 100%
-  );
-}
-
-.home-hero-bottom-scrim {
-  background: linear-gradient(
-    0deg,
-    rgb(0 0 0 / 0.45) 0%,
-    transparent 33%
-  );
-}
-
-.home-hero-products-image {
-  filter: drop-shadow(0 28px 70px rgb(0 0 0 / 0.78));
-}
-
-.home-hero-description {
-  color: rgb(255 247 220 / 0.94);
-  text-shadow: 0 2px 16px rgb(0 0 0 / 0.78);
-}
-
-.home-hero-secondary-button {
-  background: rgb(7 7 5 / 0.68);
-}
-
-.home-benefits-bar {
-  background: linear-gradient(100deg, #f8c51c 0%, #f0bc19 52%, #ffd549 100%);
-}
-
-.light .home-hero-surface {
-  background: #241d10;
-}
-
-.light .home-hero-house {
-  filter: brightness(1.18) contrast(1.03) saturate(1.05);
-}
-
-.light .home-hero-scrim {
-  background: linear-gradient(
-    90deg,
-    rgb(27 19 8 / 0.82) 0%,
-    rgb(27 19 8 / 0.48) 42%,
-    rgb(27 19 8 / 0.08) 78%
-  );
-}
-
-.light .home-hero-warm-glow {
-  background: radial-gradient(
-    circle at 66% 43%,
-    rgb(255 211 102 / 0.48),
-    transparent 44%
-  );
-}
-
-.light .home-hero-description {
-  color: #fff8df;
-}
-
-.light .home-hero-secondary-button {
-  border-color: rgb(255 219 108 / 0.62);
-  background: rgb(31 22 8 / 0.76);
-  color: #fff8df;
-}
-
-.light .home-benefits-bar {
-  background: linear-gradient(100deg, #ffd856 0%, #f5c328 52%, #ffdf66 100%);
-  box-shadow: 0 -10px 30px rgb(131 86 0 / 0.12);
-}
-
-.light .home-hero-products-image {
-  filter: drop-shadow(0 20px 52px rgb(65 43 3 / 0.3));
+.light .gold-gradient-text {
+  color: var(--amber-600);
 }
 
 @media (prefers-reduced-motion: reduce) {

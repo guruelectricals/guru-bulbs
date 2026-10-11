@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { buttonVariants } from "@/components/ui/button";
 import {
   ArrowRight,
   BookOpen,
@@ -123,7 +124,7 @@ export function BlogPageClient({ posts }: { posts: any[] }) {
 
                   <Link
                     href={getLocalizedHref(`/blog/${featuredPost.slug}`)}
-                    className="inline-flex items-center gap-1.5 rounded-full bg-amber-500 px-4 py-2 text-xs font-extrabold text-neutral-950 hover:bg-amber-400 transition-all shadow-md shadow-amber-500/20"
+                    className={buttonVariants({ variant: "brand", size: "cta-sm" })}
                   >
                     {t("readArticle")} <ArrowRight className="size-3.5" />
                   </Link>

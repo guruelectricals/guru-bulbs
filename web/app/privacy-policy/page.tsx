@@ -1,6 +1,7 @@
 import * as React from "react";
 import type { Metadata } from "next";
 import Link from "next/link";
+import { buttonVariants } from "@/components/ui/button";
 import {
   ShieldCheck,
   Lock,
@@ -128,7 +129,7 @@ export default async function PrivacyPolicyPage() {
               <div className="pt-2">
                 <Link
                   href="/contact"
-                  className="inline-flex items-center justify-center rounded-2xl bg-amber-500 px-5 py-2.5 text-xs font-extrabold text-neutral-950 hover:bg-amber-400 transition-colors shadow-lg shadow-amber-500/20"
+                  className={buttonVariants({ variant: "brand", size: "cta" })}
                 >
                   Contact Data Privacy Officer
                 </Link>

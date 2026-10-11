@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { buttonVariants } from "@/components/ui/button";
 import Image from "next/image";
 import { ArrowRight, ShieldCheck, Zap, PackageX } from "lucide-react";
 import { PriceTag } from "@/components/price-tag";
@@ -231,7 +232,11 @@ export function ProductsPageClient({
 
                       <Link
                         href={getLocalizedHref(`/products/${product.slug}`)}
-                        className="inline-flex items-center gap-1.5 rounded-full bg-amber-500/15 border border-amber-500/40 px-3.5 py-2 text-xs font-extrabold tracking-wider uppercase text-amber-400 transition-all duration-300 group-hover:bg-amber-500 group-hover:text-neutral-950 group-hover:border-amber-500 shadow-md"
+                        className={buttonVariants({
+                          variant: "brandOutline",
+                          size: "cta-sm",
+                          className: "group-hover:border-amber-500 group-hover:bg-amber-500 group-hover:text-neutral-950",
+                        })}
                       >
                         {t("details")} <ArrowRight className="size-3.5" />
                       </Link>
@@ -257,7 +262,7 @@ export function ProductsPageClient({
               <div className="mt-6">
                 <Link
                   href={getLocalizedHref("/products")}
-                  className="inline-flex items-center justify-center rounded-full bg-amber-500 px-6 py-2.5 text-xs font-extrabold uppercase tracking-wider text-neutral-950 shadow-lg shadow-amber-500/20 hover:bg-amber-400"
+                  className={buttonVariants({ variant: "brand", size: "cta" })}
                 >
                   {language === "ne" ? "सबै फिल्टरहरू हटाउनुहोस्" : "Clear All Filters"}
                 </Link>

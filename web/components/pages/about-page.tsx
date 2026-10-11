@@ -13,7 +13,7 @@ import {
   Factory,
   ArrowRight,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { useLanguage } from "@/providers/language-provider";
 
 export function AboutPageClient({ settings }: { settings: any }) {
@@ -207,22 +207,17 @@ export function AboutPageClient({ settings }: { settings: any }) {
             {t("aboutCtaDesc")}
           </p>
           <div className="flex flex-wrap justify-center gap-4 pt-2">
-            <Link href="/products">
-              <Button
-                size="lg"
-                className="rounded-full bg-amber-500 font-extrabold text-neutral-950 hover:bg-amber-400 px-8 shadow-lg shadow-amber-500/25"
-              >
-                {t("viewAllProducts")} <ArrowRight className="size-4 ml-1" />
-              </Button>
+            <Link
+              href="/products"
+              className={buttonVariants({ variant: "brand", size: "cta-lg" })}
+            >
+              {t("viewAllProducts")} <ArrowRight className="size-4" />
             </Link>
-            <Link href="/dealership">
-              <Button
-                size="lg"
-                variant="outline"
-                className="rounded-full border-amber-500/40 text-amber-400 hover:bg-amber-500/10 px-8"
-              >
-                {t("becomeDealer")}
-              </Button>
+            <Link
+              href="/dealership"
+              className={buttonVariants({ variant: "brandOutline", size: "cta-lg" })}
+            >
+              {t("becomeDealer")}
             </Link>
           </div>
         </div>
