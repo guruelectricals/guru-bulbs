@@ -475,6 +475,7 @@ export function Navbar({
               className="inline-flex size-9 items-center justify-center rounded-full text-neutral-300 transition-colors hover:bg-amber-500/10 hover:text-amber-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-amber-400"
               aria-label={isDark ? t("switchLight") : t("switchDark")}
               title={isDark ? t("switchLight") : t("switchDark")}
+              suppressHydrationWarning
             >
               {isMounted && resolvedTheme === "light" ? (
                 <Moon className="size-4" aria-hidden="true" />
@@ -498,6 +499,8 @@ export function Navbar({
             {/* MOBILE NAVIGATION */}
             <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
               <SheetTrigger
+                id="mobile-menu-trigger"
+                suppressHydrationWarning
                 className="inline-flex size-9 items-center justify-center rounded-full text-neutral-300 transition-colors hover:bg-amber-500/10 hover:text-amber-400 lg:hidden"
                 aria-label="Open menu"
               >

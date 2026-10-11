@@ -260,7 +260,140 @@ export const settingsType = defineType({
       rows: 3,
       group: "contact",
     }),
+    defineField({
+      name: "addressNe",
+      title: "Office Address (Nepali)",
+      type: "text",
+      rows: 3,
+      group: "contact",
+    }),
 
+    defineField({
+      name: "contactInfoBadge",
+      title: "Contact Section Badge",
+      type: "string",
+      group: "contact",
+      description: "Badge above contact information heading (e.g. Reach Out Direct).",
+    }),
+    defineField({
+      name: "contactInfoBadgeNe",
+      title: "Contact Section Badge (Nepali)",
+      type: "string",
+      group: "contact",
+    }),
+    defineField({
+      name: "contactInfoTitle",
+      title: "Contact Section Title",
+      type: "string",
+      group: "contact",
+      description: "Heading for contact details (e.g. Contact Information).",
+    }),
+    defineField({
+      name: "contactInfoTitleNe",
+      title: "Contact Section Title (Nepali)",
+      type: "string",
+      group: "contact",
+    }),
+
+    defineField({
+      name: "emailLabel",
+      title: "Email Card Label",
+      type: "string",
+      group: "contact",
+      description: "Label for email card (e.g. EMAIL US).",
+    }),
+    defineField({
+      name: "emailLabelNe",
+      title: "Email Card Label (Nepali)",
+      type: "string",
+      group: "contact",
+    }),
+    defineField({
+      name: "emailSubtext",
+      title: "Email Card Subtext",
+      type: "string",
+      group: "contact",
+      description: "Note below email (e.g. We respond within 24 hours).",
+    }),
+    defineField({
+      name: "emailSubtextNe",
+      title: "Email Card Subtext (Nepali)",
+      type: "string",
+      group: "contact",
+    }),
+
+    defineField({
+      name: "phoneLabel",
+      title: "Phone Support Label",
+      type: "string",
+      group: "contact",
+      description: "Label for phone card (e.g. PHONE SUPPORT).",
+    }),
+    defineField({
+      name: "phoneLabelNe",
+      title: "Phone Support Label (Nepali)",
+      type: "string",
+      group: "contact",
+    }),
+    defineField({
+      name: "phoneSubtext",
+      title: "Phone Support Hours / Note",
+      type: "string",
+      group: "contact",
+      description: "Hours note below phone numbers (e.g. Sun - Fri, 9:00 AM - 6:00 PM NPT).",
+    }),
+    defineField({
+      name: "phoneSubtextNe",
+      title: "Phone Support Hours / Note (Nepali)",
+      type: "string",
+      group: "contact",
+    }),
+
+    defineField({
+      name: "locationLabel",
+      title: "Location Card Label",
+      type: "string",
+      group: "contact",
+      description: "Label for address/location card (e.g. LOCATION).",
+    }),
+    defineField({
+      name: "locationLabelNe",
+      title: "Location Card Label (Nepali)",
+      type: "string",
+      group: "contact",
+    }),
+
+    defineField({
+      name: "storeOpenLabel",
+      title: "Store Open Card Label",
+      type: "string",
+      group: "contact",
+      description: "Label for business hours card (e.g. STORE OPEN).",
+    }),
+    defineField({
+      name: "storeOpenLabelNe",
+      title: "Store Open Card Label (Nepali)",
+      type: "string",
+      group: "contact",
+    }),
+    defineField({
+      name: "businessHours",
+      title: "Store Hours / Business Hours",
+      type: "text",
+      rows: 2,
+      group: ["contact", "business"],
+      description:
+        "The store open schedule displayed on the contact card (e.g. every day, or Sun - Fri: 9:00 AM - 6:00 PM).",
+    }),
+    defineField({
+      name: "businessHoursNe",
+      title: "Store Hours / Business Hours (Nepali)",
+      type: "text",
+      rows: 2,
+      group: ["contact", "business"],
+      description:
+        "Store open schedule in Nepali (e.g. हरेक दिन or आइत - शुक्र: बिहान ९:०० - साँझ ६:००).",
+    }),
 
     defineField({
       name: "googleMapsUrl",
@@ -300,15 +433,7 @@ export const settingsType = defineType({
 
 
 
-    defineField({
-      name: "businessHours",
-      title: "Business Hours",
-      type: "text",
-      rows: 3,
-      group: "business",
-      description:
-        "Example: Monday-Friday 9AM-5PM",
-    }),
+
 
 
     defineField({
