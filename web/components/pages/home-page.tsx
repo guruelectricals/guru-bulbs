@@ -306,7 +306,7 @@ export function HomePage({
               </Link>
             </div>
 
-            <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
               {featuredProducts.map((product) => (
                 <Link
                   key={product._id}
@@ -327,7 +327,7 @@ export function HomePage({
                             .url()}
                           alt={product.mainImage.alt || product.title}
                           fill
-                          sizes="(min-width: 768px) 33vw, 100vw"
+                          sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
                           className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-108"
                         />
                       ) : (
