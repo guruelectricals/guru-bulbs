@@ -19,15 +19,49 @@ const MAP_EMBED_SRC = `https://www.google.com/maps?q=${MAP_LAT},${MAP_LNG}&z=16&
 export function ContactPageClient({ settings }: { settings: Settings | null }) {
   const { language, t } = useLanguage();
 
+  const isNe = language === "ne";
+
   const email = settings?.email || "hello@gurubulbs.com";
   const phone = settings?.phone || "+977 9812345678";
   const secondaryPhone = settings?.secondaryPhone;
-  const address =
-    settings?.address || "Sankhamul Road, New Baneshwor, Kathmandu, Nepal";
-  const businessHours =
-    language === "ne"
-      ? "आइत - शुक्र: बिहान ९:०० - साँझ ६:०० (शनिबार: बन्द)"
-      : (settings?.businessHours || "Sun - Fri: 9:00 AM - 6:00 PM (Saturday: Closed)");
+  const address = isNe
+    ? (settings?.addressNe || settings?.address || "Sankhamul Road, New Baneshwor, Kathmandu, Nepal")
+    : (settings?.address || "Sankhamul Road, New Baneshwor, Kathmandu, Nepal");
+  const businessHours = isNe
+    ? (settings?.businessHoursNe || "आइत - शुक्र: बिहान ९:०० - साँझ ६:०० (शनिबार: बन्द)")
+    : (settings?.businessHours || "Sun - Fri: 9:00 AM - 6:00 PM (Saturday: Closed)");
+
+  const contactBadge = isNe
+    ? (settings?.contactInfoBadgeNe || t("reachOutDirect"))
+    : (settings?.contactInfoBadge || t("reachOutDirect"));
+
+  const contactTitle = isNe
+    ? (settings?.contactInfoTitleNe || t("contactInfoTitle"))
+    : (settings?.contactInfoTitle || t("contactInfoTitle"));
+
+  const emailLabel = isNe
+    ? (settings?.emailLabelNe || t("emailUs"))
+    : (settings?.emailLabel || t("emailUs"));
+
+  const emailSubtext = isNe
+    ? (settings?.emailSubtextNe || "हामी २४ घण्टाभित्र जवाफ दिन्छौँ")
+    : (settings?.emailSubtext || "We respond within 24 hours");
+
+  const phoneLabel = isNe
+    ? (settings?.phoneLabelNe || t("phoneSupport"))
+    : (settings?.phoneLabel || t("phoneSupport"));
+
+  const phoneSubtext = isNe
+    ? (settings?.phoneSubtextNe || "आइत - शुक्र, बिहान ९:०० - साँझ ६:००")
+    : (settings?.phoneSubtext || "Sun - Fri, 9:00 AM - 6:00 PM NPT");
+
+  const locationLabel = isNe
+    ? (settings?.locationLabelNe || t("headquarters"))
+    : (settings?.locationLabel || t("headquarters"));
+
+  const storeOpenLabel = isNe
+    ? (settings?.storeOpenLabelNe || t("showroomHours"))
+    : (settings?.storeOpenLabel || t("showroomHours"));
 
   return (
     <div className="min-h-screen bg-neutral-950 text-neutral-100">
@@ -58,10 +92,10 @@ export function ContactPageClient({ settings }: { settings: Settings | null }) {
             <div className="lg:col-span-2 space-y-6">
               <div>
                 <span className="text-xs font-bold tracking-[0.2em] text-amber-400 uppercase">
-                  {t("reachOutDirect")}
+                  {contactBadge}
                 </span>
                 <h2 className="mt-1 text-2xl sm:text-3xl font-extrabold text-white">
-                  {t("contactInfoTitle")}
+                  {contactTitle}
                 </h2>
               </div>
 
@@ -75,14 +109,16 @@ export function ContactPageClient({ settings }: { settings: Settings | null }) {
                   </div>
                   <div>
                     <h3 className="text-xs font-bold tracking-wider uppercase text-neutral-400">
-                      {t("emailUs")}
+                      {emailLabel}
                     </h3>
                     <p className="mt-1 text-sm font-bold text-white group-hover:text-amber-400 transition-colors">
                       {email}
                     </p>
-                    <p className="text-[11px] text-neutral-400 mt-0.5">
-                      {language === "ne" ? "हामी २४ घण्टाभित्र जवाफ दिन्छौँ" : "We respond within 24 hours"}
-                    </p>
+                    {emailSubtext && (
+                      <p className="text-[11px] text-neutral-400 mt-0.5">
+                        {emailSubtext}
+                      </p>
+                    )}
                   </div>
                 </a>
 
@@ -95,7 +131,7 @@ export function ContactPageClient({ settings }: { settings: Settings | null }) {
                   </div>
                   <div>
                     <h3 className="text-xs font-bold tracking-wider uppercase text-neutral-400">
-                      {t("phoneSupport")}
+                      {phoneLabel}
                     </h3>
                     <p className="mt-1 text-sm font-bold text-white group-hover:text-amber-400 transition-colors">
                       {phone}
@@ -105,9 +141,11 @@ export function ContactPageClient({ settings }: { settings: Settings | null }) {
                         {secondaryPhone}
                       </p>
                     )}
-                    <p className="text-[11px] text-neutral-400 mt-1">
-                      {language === "ne" ? "आइत - शुक्र, बिहान ९:०० - साँझ ६:००" : "Sun - Fri, 9:00 AM - 6:00 PM NPT"}
-                    </p>
+                    {phoneSubtext && (
+                      <p className="text-[11px] text-neutral-400 mt-1">
+                        {phoneSubtext}
+                      </p>
+                    )}
                   </div>
                 </a>
 
@@ -117,7 +155,7 @@ export function ContactPageClient({ settings }: { settings: Settings | null }) {
                   </div>
                   <div>
                     <h3 className="text-xs font-bold tracking-wider uppercase text-neutral-400">
-                      {t("headquarters")}
+                      {locationLabel}
                     </h3>
                     <p className="mt-1 text-sm font-bold text-white whitespace-pre-line">
                       {address}
@@ -131,7 +169,7 @@ export function ContactPageClient({ settings }: { settings: Settings | null }) {
                   </div>
                   <div>
                     <h3 className="text-xs font-bold tracking-wider uppercase text-neutral-400">
-                      {t("showroomHours")}
+                      {storeOpenLabel}
                     </h3>
                     <p className="mt-1 text-sm font-bold text-white whitespace-pre-line">
                       {businessHours}
