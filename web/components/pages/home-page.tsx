@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -9,6 +10,7 @@ import {
   Gem,
   Headphones,
   Lightbulb,
+  Pencil,
   Quote,
   ShieldCheck,
   Star,
@@ -33,6 +35,8 @@ import {
 } from "@/lib/constants";
 import type { TranslationKey } from "@/lib/i18n";
 import { HomeHeroCarousel, type HeroSlide } from "@/components/home-hero-carousel";
+import { ReviewModal } from "@/components/review-modal";
+import { cn } from "@/lib/utils";
 
 const PRODUCTS_IMAGE = "/images/hero-products-ring-cutout.png";
 
@@ -59,6 +63,8 @@ export function HomePage({
   heroSettings?: Settings | null;
 }) {
   const { language, t } = useLanguage();
+  const [reviewsList, setReviewsList] = useState<SanityTestimonial[]>(testimonials);
+  const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
 
   const heroBadge =
     language === "ne"
@@ -110,12 +116,13 @@ export function HomePage({
   }
 
   const displayReviews =
-    testimonials && testimonials.length > 0
-      ? testimonials.map((tItem) => ({
+    reviewsList && reviewsList.length > 0
+      ? reviewsList.map((tItem) => ({
         name: tItem.name,
         initials: tItem.initials || tItem.name.slice(0, 2).toUpperCase(),
         context: language === "ne" ? tItem.roleNe || tItem.role : tItem.role,
         quote: language === "ne" ? tItem.quoteNe || tItem.quote : tItem.quote,
+        rating: tItem.rating ?? 5,
       }))
       : [
         {
@@ -123,18 +130,21 @@ export function HomePage({
           initials: "AR",
           context: t("review1Context" as TranslationKey),
           quote: t("review1Quote" as TranslationKey),
+          rating: 5,
         },
         {
           name: "Deepak K.",
           initials: "DK",
           context: t("review2Context" as TranslationKey),
           quote: t("review2Quote" as TranslationKey),
+          rating: 5,
         },
         {
           name: "Nishan Rana",
           initials: "NR",
           context: t("review3Context" as TranslationKey),
           quote: t("review3Quote" as TranslationKey),
+          rating: 5,
         },
       ];
 
@@ -494,7 +504,12 @@ export function HomePage({
                           {Array.from({ length: 5 }, (_, i) => (
                             <Star
                               key={i}
-                              className="size-3.5 fill-amber-400 text-amber-400"
+                              className={cn(
+                                "size-3.5",
+                                i < (review.rating ?? 5)
+                                  ? "fill-amber-400 text-amber-400"
+                                  : "text-neutral-600"
+                              )}
                             />
                           ))}
                         </div>
@@ -525,6 +540,21 @@ export function HomePage({
               ),
             )}
           </div>
+        </div>
+
+        {/* WRITE A REVIEW CTA */}
+        <div className="mt-12 flex flex-col items-center justify-center text-center space-y-3.5 px-4">
+          <p className="text-sm sm:text-base font-medium text-neutral-300">
+            {t("reviewsCtaQuestion" as TranslationKey)}
+          </p>
+          <button
+            type="button"
+            onClick={() => setIsReviewModalOpen(true)}
+            className="group inline-flex items-center gap-2.5 rounded-full bg-amber-500 px-7 py-3 text-sm font-bold text-neutral-950 shadow-lg shadow-amber-500/20 transition-all duration-200 hover:bg-amber-400 hover:shadow-amber-400/30 hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
+          >
+            <Pencil className="size-4 text-neutral-950 transition-transform group-hover:-rotate-12" />
+            <span>{t("writeReview" as TranslationKey)}</span>
+          </button>
         </div>
       </section>
 
@@ -568,6 +598,15 @@ export function HomePage({
           </div>
         </div>
       </section>
+
+      {/* REVIEW SUBMISSION MODAL */}
+      <ReviewModal
+        isOpen={isReviewModalOpen}
+        onClose={() => setIsReviewModalOpen(false)}
+        onSuccess={(newReview) => {
+          setReviewsList((prev) => [newReview, ...prev]);
+        }}
+      />
     </div>
   );
 }
